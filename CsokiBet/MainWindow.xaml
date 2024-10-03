@@ -1,0 +1,146 @@
+﻿<Window x:Class="CsokiBet.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CsokiBet"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="626" Width="950">
+    <Window.Resources>
+
+        <SolidColorBrush x:Key="brushWatermarkBackground" Color="White" />
+        <SolidColorBrush x:Key="brushWatermarkForeground" Color="LightSteelBlue" />
+        <SolidColorBrush x:Key="brushWatermarkBorder" Color="Indigo" />
+
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <local:TextInputToVisibilityConverter x:Key="TextInputToVisibilityConverter" />
+
+        <Style x:Key="EntryFieldStyle" TargetType="Grid" >
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="20,0" />
+        </Style>
+
+    </Window.Resources>
+
+    <Border>
+        <Border.Background>
+            <ImageBrush ImageSource="\images\loginbackground.png"/>
+        </Border.Background>
+        <Grid Margin="20">
+            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,217,23,0">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="10">
+                    <!-- Username Field -->
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <!-- TextBox szélessége -->
+                            <ColumnDefinition Width="Auto" />
+                            <!-- Ikon -->
+                        </Grid.ColumnDefinitions>
+
+                        <!-- TextBox -->
+                        <TextBox Width="200" Grid.Column="0" FontSize="16" Foreground="LightGray" BorderBrush="Transparent" 
+                 VerticalAlignment="Bottom" Padding="0,0,0,5" Background="Transparent"
+                 >
+                            <TextBox.Style>
+                                <Style TargetType="TextBox">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="TextBox">
+                                                <Border BorderThickness="0,0,0,1" BorderBrush="LightGray">
+                                                    <ScrollViewer x:Name="PART_ContentHost" />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+
+                        <!-- Icon (User) -->
+                        <Image Source="images/user_icon.png" Width="20" Height="20" VerticalAlignment="Center" Margin="187,0,3,0"/>
+                    </Grid>
+
+                    <!-- Passcode Field -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <!-- TextBox szélessége -->
+                            <ColumnDefinition Width="Auto" />
+                            <!-- Ikon -->
+                        </Grid.ColumnDefinitions>
+
+                        <!-- TextBox -->
+                        <TextBox Width="200" Grid.Column="0" FontSize="16" Foreground="LightGray" BorderBrush="Transparent" 
+                 VerticalAlignment="Bottom" Padding="0,0,0,5" Background="Transparent"
+                 >
+                            <TextBox.Style>
+                                <Style TargetType="TextBox">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="TextBox">
+                                                <Border BorderThickness="0,0,0,1" BorderBrush="LightGray">
+                                                    <ScrollViewer x:Name="PART_ContentHost" />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+
+                        <!-- Icon (Lock) -->
+                        <Image Source="images/lock_icon.png" Width="20" Height="20" VerticalAlignment="Center" Margin="188,0,2,0"/>
+                    </Grid>
+                </StackPanel>
+
+
+
+                <Button Margin="0,40,0,0" x:Name="btnLogin" FontSize="20" Width="230" Height="40" FontStyle="Italic" Click="btnLogin_Click" Content="Bejelentkezés">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <!-- Parallelogram Shape -->
+                                <Polygon Points="15,0 220,0 205,40 0,40"
+                         Fill="#39FF6E"
+                         Stroke="Transparent"
+                         StrokeThickness="2"/>
+                                <!-- TextBlock to display Button content -->
+                                <TextBlock Text="{TemplateBinding Content}" 
+                           Foreground="White" FontWeight="Black" FontStyle="Italic"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Margin="0,0,0,0">
+                                    <TextBlock.RenderTransform>
+                                        <SkewTransform AngleX="-" />
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock FontWeight="Black" FontStyle="Italic" Text="Nincs fiókod?" Foreground="LightGray" FontSize="12">
+                        <TextBlock.RenderTransform>
+                            <SkewTransform AngleX="-20" />
+                        </TextBlock.RenderTransform>
+                    </TextBlock>
+
+                    <Button Click="btnRegisztralj_Click" x:Name="btnRegisztralj" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Margin="5,-2,0,0">
+                        <Button.Content>
+                            <TextBlock FontStyle="Italic" Text="REGISZTRÁLJ" Foreground="#39FF6E" FontSize="12" FontWeight="Bold">
+                                <TextBlock.RenderTransform>
+                                    <SkewTransform AngleX="-20" />
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+
+
+        </Grid>
+    </Border>
+</Window>
