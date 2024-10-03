@@ -5,99 +5,123 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CsokiBet"
         mc:Ignorable="d"
-        Title="MainWindow" Height="626" Width="950">
+        Title="MainWindow" Height="626" Width="950"
+        WindowStartupLocation="CenterScreen" 
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None"  MouseDown="Window_MouseDown">
     <Window.Resources>
-
         <SolidColorBrush x:Key="brushWatermarkBackground" Color="White" />
         <SolidColorBrush x:Key="brushWatermarkForeground" Color="LightSteelBlue" />
         <SolidColorBrush x:Key="brushWatermarkBorder" Color="Indigo" />
-
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <local:TextInputToVisibilityConverter x:Key="TextInputToVisibilityConverter" />
 
-        <Style x:Key="EntryFieldStyle" TargetType="Grid" >
+        <Style x:Key="EntryFieldStyle" TargetType="Grid">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Margin" Value="20,0" />
         </Style>
-
     </Window.Resources>
 
-    <Border>
+    <Border CornerRadius="25">
         <Border.Background>
             <ImageBrush ImageSource="\images\loginbackground.png"/>
         </Border.Background>
         <Grid Margin="20">
             <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,217,23,0">
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="10">
-                    <!-- Username Field -->
-                    <Grid Margin="0,0,0,20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <!-- TextBox szélessége -->
-                            <ColumnDefinition Width="Auto" />
-                            <!-- Ikon -->
-                        </Grid.ColumnDefinitions>
+                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="10">
+                        <!-- Username Field -->
+                        <Grid Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                        <!-- TextBox -->
-                        <TextBox Width="200" Grid.Column="0" FontSize="16" Foreground="LightGray" BorderBrush="Transparent" 
-                 VerticalAlignment="Bottom" Padding="0,0,0,5" Background="Transparent"
-                 >
-                            <TextBox.Style>
-                                <Style TargetType="TextBox">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="TextBox">
-                                                <Border BorderThickness="0,0,0,1" BorderBrush="LightGray">
-                                                    <ScrollViewer x:Name="PART_ContentHost" />
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </TextBox.Style>
-                        </TextBox>
+                            <!-- TextBox with Placeholder -->
+                            <Grid>
+                                <TextBox x:Name="txtUsername" Width="200" FontSize="16" Foreground="LightGray" BorderBrush="Transparent"
+                                         VerticalAlignment="Bottom" Padding="0,0,0,5" Background="Transparent"
+                                         TextChanged="txtUserEntry_TextChanged" 
+                                         FocusVisualStyle="{x:Null}">
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="TextBox">
+                                                        <Border BorderThickness="0,0,0,1" BorderBrush="LightGray" 
+                                                                Background="Transparent">
+                                                            <ScrollViewer x:Name="PART_ContentHost" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="BorderBrush" Value="Transparent"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Padding" Value="0,0,0,5"/>
+                                            <Setter Property="Foreground" Value="LightGray"/>
+                                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                                <TextBlock Margin="5,2" Text="Username" Foreground="LightGray"
+                                           FontStyle="Italic" IsHitTestVisible="False" 
+                                           Visibility="{Binding ElementName=txtUsername, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                <!-- Underline -->
+                                <Border BorderBrush="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                            </Grid>
 
-                        <!-- Icon (User) -->
-                        <Image Source="images/user_icon.png" Width="20" Height="20" VerticalAlignment="Center" Margin="187,0,3,0"/>
-                    </Grid>
+                            <!-- Icon (User) -->
+                            <Image Source="images/user_icon.png" Width="20" Height="20" VerticalAlignment="Center" Margin="187,0,3,0"/>
+                        </Grid>
 
-                    <!-- Passcode Field -->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <!-- TextBox szélessége -->
-                            <ColumnDefinition Width="Auto" />
-                            <!-- Ikon -->
-                        </Grid.ColumnDefinitions>
+                        <!-- Passcode Field -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                        <!-- TextBox -->
-                        <TextBox Width="200" Grid.Column="0" FontSize="16" Foreground="LightGray" BorderBrush="Transparent" 
-                 VerticalAlignment="Bottom" Padding="0,0,0,5" Background="Transparent"
-                 >
-                            <TextBox.Style>
-                                <Style TargetType="TextBox">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="TextBox">
-                                                <Border BorderThickness="0,0,0,1" BorderBrush="LightGray">
-                                                    <ScrollViewer x:Name="PART_ContentHost" />
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </TextBox.Style>
-                        </TextBox>
+                            <!-- PasswordBox with Placeholder -->
+                            <Grid>
+                                <PasswordBox x:Name="txtPasscode" Width="200" FontSize="16" Foreground="LightGray" BorderBrush="Transparent"
+                                             VerticalAlignment="Bottom" Padding="0,0,0,5" Background="Transparent"
+                                             FocusVisualStyle="{x:Null}" PasswordChanged="txtPasscode_PasswordChanged">
+                                    <PasswordBox.Style>
+                                        <Style TargetType="PasswordBox">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="PasswordBox">
+                                                        <Border BorderThickness="0,0,0,1" BorderBrush="LightGray" 
+                                                                Background="Transparent">
+                                                            <ScrollViewer x:Name="PART_ContentHost" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="BorderBrush" Value="Transparent"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Padding" Value="0,0,0,5"/>
+                                            <Setter Property="Foreground" Value="LightGray"/>
+                                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                        </Style>
+                                    </PasswordBox.Style>
+                                </PasswordBox>
+                                <TextBlock x:Name="tbpasscode" Margin="5,2" Text="Passcode" Foreground="LightGray"
+                                           FontStyle="Italic" IsHitTestVisible="False" 
+                                           Visibility="{Binding ElementName=txtPasscode, Path=Password.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                <!-- Underline -->
+                                <Border BorderBrush="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                            </Grid>
 
-                        <!-- Icon (Lock) -->
-                        <Image Source="images/lock_icon.png" Width="20" Height="20" VerticalAlignment="Center" Margin="188,0,2,0"/>
-                    </Grid>
+                            <!-- Icon (Lock) -->
+                            <Image Source="images/lock_icon.png" Width="20" Height="20" VerticalAlignment="Center" Margin="188,0,2,0"/>
+                        </Grid>
+                    </StackPanel>
                 </StackPanel>
 
-
-
-                <Button Margin="0,40,0,0" x:Name="btnLogin" FontSize="20" Width="230" Height="40" FontStyle="Italic" Click="btnLogin_Click" Content="Bejelentkezés">
+                <Button Cursor="Hand" Margin="0,40,0,0" x:Name="btnLogin" FontSize="20" Width="230" Height="40" FontStyle="Italic" Click="btnLogin_Click" Content="Bejelentkezés">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Grid>
@@ -105,14 +129,45 @@
                                 <Polygon Points="15,0 220,0 205,40 0,40"
                          Fill="#39FF6E"
                          Stroke="Transparent"
-                         StrokeThickness="2"/>
+                         StrokeThickness="2">
+                                    <Polygon.Style>
+                                        <Style TargetType="Polygon">
+                                            <Setter Property="Fill" Value="#39FF6E"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Fill" Value="DarkGreen"/>
+                                                    <!-- Sötétebb zöld -->
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Polygon.Style>
+                                    <!-- Animáció a színváltásra -->
+                                    <Polygon.Triggers>
+                                        <EventTrigger RoutedEvent="MouseEnter">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <ColorAnimation Storyboard.TargetProperty="(Polygon.Fill).(SolidColorBrush.Color)" 
+                                                    To="#32B74D" Duration="0:0:0.2"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                        <EventTrigger RoutedEvent="MouseLeave">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <ColorAnimation Storyboard.TargetProperty="(Polygon.Fill).(SolidColorBrush.Color)" 
+                                                    To="#39FF6E" Duration="0:0:0.2"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Polygon.Triggers>
+                                </Polygon>
                                 <!-- TextBlock to display Button content -->
                                 <TextBlock Text="{TemplateBinding Content}" 
                            Foreground="White" FontWeight="Black" FontStyle="Italic"
                            HorizontalAlignment="Center" VerticalAlignment="Center"
                            Margin="0,0,0,0">
                                     <TextBlock.RenderTransform>
-                                        <SkewTransform AngleX="-" />
+                                        <SkewTransform AngleX="-20" />
                                     </TextBlock.RenderTransform>
                                 </TextBlock>
                             </Grid>
@@ -139,8 +194,6 @@
                     </Button>
                 </StackPanel>
             </StackPanel>
-
-
         </Grid>
     </Border>
 </Window>

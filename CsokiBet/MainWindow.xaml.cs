@@ -147,5 +147,37 @@ namespace CsokiBet
         {
             File.WriteAllLines(userFilePath, new string[] { username, passwordHash });
         }
+
+
+
+
+        private void txtUserEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+
+        private void txtPasscode_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            // Az új jelszó beírása esetén automatikusan eltünteti a szöveget
+            var passwordBox = sender as PasswordBox;
+
+            if (passwordBox != null && !string.IsNullOrEmpty(passwordBox.Password))
+            {
+                tbpasscode.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                tbpasscode.Visibility = Visibility.Visible;
+            }
+        }
+        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
+
     }
 }
