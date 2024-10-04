@@ -11,6 +11,7 @@
         AllowsTransparency="True"
         WindowStyle="None"  MouseDown="Window_MouseDown">
     <Window.Resources>
+
         <SolidColorBrush x:Key="brushWatermarkBackground" Color="White" />
         <SolidColorBrush x:Key="brushWatermarkForeground" Color="LightSteelBlue" />
         <SolidColorBrush x:Key="brushWatermarkBorder" Color="Indigo" />
@@ -21,6 +22,73 @@
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Margin" Value="20,0" />
+        </Style>
+
+        <Style x:Key="TransparentButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#39FF6E"/>
+            <!-- Alap háttérszín -->
+            <Setter Property="BorderBrush" Value="#39FF6E"/>
+            <!-- Alap keret szín -->
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Cursor" Value="Hand"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="BorderElement" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="BorderElement" Property="Background" Value="Transparent"/>
+                                <Setter TargetName="BorderElement" Property="BorderBrush" Value="Transparent"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <Style x:Key="GreenCheckBox" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontStyle" Value="Italic" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <!-- Custom CheckMark Box -->
+                            <Grid Width="20" Height="20" Margin="0,0,5,0">
+                                <Border BorderBrush="#39FF6E" BorderThickness="2" CornerRadius="4" Background="Transparent"/>
+
+                                <!-- Adjusted Checkmark Path for center alignment -->
+                                <Path x:Name="CheckMark" 
+                                Data="M 2 8 L 7 13 L 14 4" 
+                                Stroke="Transparent" StrokeThickness="2" 
+                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+
+                            <!-- Checkbox Label -->
+                            <TextBlock Text="Bejelentkezve maradok" Foreground="White" VerticalAlignment="Center" />
+                        </StackPanel>
+
+                        <!-- Trigger for CheckMark Visibility -->
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="CheckMark" Property="Stroke" Value="#39FF6E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
 
@@ -65,7 +133,7 @@
                                         </Style>
                                     </TextBox.Style>
                                 </TextBox>
-                                <TextBlock Margin="5,2" Text="Username" Foreground="LightGray"
+                                <TextBlock Margin="5,2" Text="Felhasználónév" Foreground="LightGray"
                                            FontStyle="Italic" IsHitTestVisible="False" 
                                            Visibility="{Binding ElementName=txtUsername, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                 <!-- Underline -->
@@ -74,6 +142,46 @@
 
                             <!-- Icon (User) -->
                             <Image Source="images/user_icon.png" Width="20" Height="20" VerticalAlignment="Center" Margin="187,0,3,0"/>
+                        </Grid>
+
+                        <!-- Email Field (Initially Hidden) -->
+                        <Grid Margin="0,0,0,20" Visibility="Collapsed" x:Name="gridEmail">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid>
+                                <TextBox x:Name="txtEmail" Width="200" FontSize="16" Foreground="LightGray" BorderBrush="Transparent"
+                                         VerticalAlignment="Bottom" Padding="0,0,0,5" Background="Transparent"
+                                         FocusVisualStyle="{x:Null}">
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="TextBox">
+                                                        <Border BorderThickness="0,0,0,1" BorderBrush="LightGray" 
+                                                                Background="Transparent">
+                                                            <ScrollViewer x:Name="PART_ContentHost" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="BorderBrush" Value="Transparent"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Padding" Value="0,0,0,5"/>
+                                            <Setter Property="Foreground" Value="LightGray"/>
+                                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                                <TextBlock Margin="5,2" Text="Email" Foreground="LightGray"
+                                           FontStyle="Italic" IsHitTestVisible="False"
+                                           Visibility="{Binding ElementName=txtEmail, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            </Grid>
+
+                            <!-- Icon (Email) -->
+                            <Image Source="images/email_icon.png" Width="20" Height="20" VerticalAlignment="Center" Margin="187,0,3,0"/>
                         </Grid>
 
                         <!-- Passcode Field -->
@@ -108,7 +216,7 @@
                                         </Style>
                                     </PasswordBox.Style>
                                 </PasswordBox>
-                                <TextBlock x:Name="tbpasscode" Margin="5,2" Text="Passcode" Foreground="LightGray"
+                                <TextBlock x:Name="tbpasscode" Margin="5,2" Text="Jelszó" Foreground="LightGray"
                                            FontStyle="Italic" IsHitTestVisible="False" 
                                            Visibility="{Binding ElementName=txtPasscode, Path=Password.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                 <!-- Underline -->
@@ -118,9 +226,52 @@
                             <!-- Icon (Lock) -->
                             <Image Source="images/lock_icon.png" Width="20" Height="20" VerticalAlignment="Center" Margin="188,0,2,0"/>
                         </Grid>
+
+                        <CheckBox x:Name="cbAutoLogin" Style="{StaticResource GreenCheckBox}" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+                        <!-- Confirm Passcode Field (Initially Hidden) -->
+                        <Grid Visibility="Collapsed" x:Name="gridConfirmPass">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Margin="0,-40,0,40">
+                                <PasswordBox x:Name="txtConfirmPasscode" Width="200" FontSize="16" Foreground="LightGray" BorderBrush="Transparent"
+                                             VerticalAlignment="Bottom" Padding="0,0,0,5" Background="Transparent"
+                                             FocusVisualStyle="{x:Null}"  PasswordChanged="txtPasscode_PasswordChanged">
+                                    <PasswordBox.Style>
+                                        <Style TargetType="PasswordBox">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="PasswordBox">
+                                                        <Border BorderThickness="0,0,0,1" BorderBrush="LightGray" 
+                                                                Background="Transparent">
+                                                            <ScrollViewer x:Name="PART_ContentHost" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="BorderBrush" Value="Transparent"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Padding" Value="0,0,0,5"/>
+                                            <Setter Property="Foreground" Value="LightGray"/>
+                                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                        </Style>
+                                    </PasswordBox.Style>
+                                </PasswordBox>
+                                <TextBlock x:Name="tbconfirmpasscode" Margin="5,2" Text="Jelszó megerősítése" Foreground="LightGray"
+                                           FontStyle="Italic" IsHitTestVisible="False"
+                                           Visibility="{Binding ElementName=txtConfirmPasscode, Path=Password.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            </Grid>
+
+                            <!-- Icon (Lock) -->
+                            <Image Source="images/lock_icon.png" Width="20" Height="20" VerticalAlignment="Top" Margin="188,-37,2,0"/>
+                        </Grid>
                     </StackPanel>
                 </StackPanel>
 
+                <!-- Login Button -->
                 <Button Cursor="Hand" Margin="0,40,0,0" x:Name="btnLogin" FontSize="20" Width="230" Height="40" FontStyle="Italic" Click="btnLogin_Click" Content="Bejelentkezés">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
@@ -136,12 +287,10 @@
                                             <Style.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="True">
                                                     <Setter Property="Fill" Value="DarkGreen"/>
-                                                    <!-- Sötétebb zöld -->
                                                 </Trigger>
                                             </Style.Triggers>
                                         </Style>
                                     </Polygon.Style>
-                                    <!-- Animáció a színváltásra -->
                                     <Polygon.Triggers>
                                         <EventTrigger RoutedEvent="MouseEnter">
                                             <BeginStoryboard>
@@ -175,17 +324,17 @@
                     </Button.Template>
                 </Button>
 
-
+                <!-- Registration Link -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock FontWeight="Black" FontStyle="Italic" Text="Nincs fiókod?" Foreground="LightGray" FontSize="12">
+                    <TextBlock x:Name="tbvanfiok" FontWeight="Black" FontStyle="Italic" Text="Nincs fiókod?" Foreground="LightGray" FontSize="12">
                         <TextBlock.RenderTransform>
                             <SkewTransform AngleX="-20" />
                         </TextBlock.RenderTransform>
                     </TextBlock>
 
-                    <Button Click="btnRegisztralj_Click" x:Name="btnRegisztralj" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Margin="5,-2,0,0">
+                    <Button Style="{StaticResource TransparentButtonStyle}" Click="btnRegisztralj_Click" x:Name="btnRegisztralj" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Margin="5,-2,0,0">
                         <Button.Content>
-                            <TextBlock FontStyle="Italic" Text="REGISZTRÁLJ" Foreground="#39FF6E" FontSize="12" FontWeight="Bold">
+                            <TextBlock x:Name="tbregisztralj" FontStyle="Italic" Text="REGISZTRÁLJ" Foreground="#39FF6E" FontSize="12" FontWeight="Bold">
                                 <TextBlock.RenderTransform>
                                     <SkewTransform AngleX="-20" />
                                 </TextBlock.RenderTransform>
