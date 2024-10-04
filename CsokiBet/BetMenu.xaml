@@ -7,108 +7,77 @@
         mc:Ignorable="d"
         Title="BetMenu" Height="450" Width="800">
     <Grid>
-    <!-- Define Rows and Columns for the layout -->
-    <Grid.RowDefinitions>
-        <RowDefinition Height="100"/>
-        <!-- Navbar -->
-        <RowDefinition Height="*"/>
-        <!-- Main Content -->
-    </Grid.RowDefinitions>
-
-    <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="150"/>
-        <!-- Sidebar Left -->
-        <ColumnDefinition Width="*"/>
-        <!-- Main Content Center -->
-        <ColumnDefinition Width="150"/>
-        <!-- Sidebar Right -->
-    </Grid.ColumnDefinitions>
-
-    <!-- Navbar (Logo, Navbar, Wallet, Logout) -->
-    <Border Grid.Row="0" Grid.ColumnSpan="3" Background="#1F1F1F">
-        <!-- Darker Gray for Navbar -->
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-            <!-- Add the Logo -->
-            <!-- Use your logo image -->
-
-            <!-- Add the Logo -->
-            <!-- Use your logo image -->
-
-            <!-- Add the Logo -->
-            <Image Source="images/csokibetlogo.png" Width="110" Height="110" Margin="0,0,0,-3"/>
-            <!-- Use your logo image -->
-
-            <Button Content="Home" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16"/>
-            <Button Content="My Wallet" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16"/>
-            <Button Content="Log Out" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16"/>
-
-        </StackPanel>
-    </Border>
-
-    <!-- Sidebar Left: Sports List -->
-    <Border Grid.Row="1" Grid.Column="0" Background="#3F3F3F" Padding="10">
-        <!-- Mid Gray for Sidebar -->
-        <StackPanel>
-            <TextBlock Text="Sports" Foreground="LightGray" FontSize="18" Margin="0,0,0,10"/>
-            <ListBox Foreground="LightGray" Background="#3F3F3F" BorderBrush="Transparent">
-                <ListBoxItem Content="Football" Background="Transparent"/>
-                <ListBoxItem Content="Basketball" Background="Transparent"/>
-                <ListBoxItem Content="Tennis" Background="Transparent"/>
-                <ListBoxItem Content="Cricket" Background="Transparent"/>
-                <ListBoxItem Content="Hockey" Background="Transparent"/>
-            </ListBox>
-        </StackPanel>
-    </Border>
-
-    <!-- Main Content Area -->
-    <Grid Grid.Row="1" Grid.Column="1">
-        <Grid.Background>
-            <ImageBrush ImageSource="images/hellyeah.png"/>
-            </Grid.Background>
-                <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <!-- Advertisement -->
-            <RowDefinition Height="3*"/>
-            <!-- Events -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Advertisement Section -->
-        <Border Grid.Row="0" Background="#CC2F4F4F" Margin="5" Padding="10">
-            <!-- Green-Toned Gray -->
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="🔥 Special Offer: Top Up Your Balance with Discounts!" 
-                           Foreground="White" 
-                           FontSize="20" 
-                           TextWrapping="Wrap" 
-                           TextAlignment="Center"/>
-                <Button Content="Top Up Now" Background="#00AA00" Foreground="White" Padding="10,5" Margin="10"/>
-                <!-- Green Button -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Row="0" Grid.ColumnSpan="3" Background="#1F1F1F">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                <Image Source="images/csokibetlogo.png" Width="110" Height="110" Margin="0,0,0,-3"/>
+                <Button Content="Home" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16"/>
+                <Button Content="My Wallet" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16"/>
+                <Button Content="Log Out" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16"/>
             </StackPanel>
         </Border>
 
-        <!-- Upcoming Events Section -->
-        <Border Grid.Row="1" Background="#CC3F3F3F" Margin="5" Padding="10">
+        <Border Grid.Row="1" Grid.Column="0" Background="#3F3F3F" Padding="10">
             <StackPanel>
-                <TextBlock Text="Upcoming Events" FontSize="20" FontWeight="Bold" Foreground="LightGray" Margin="0,0,0,10"/>
-                <ListView Background="Transparent">
-                    <ListViewItem Content="🏆 Football Final: Team A vs Team B - 12th Oct" FontSize="16" Foreground="White"/>
-                    <ListViewItem Content="🎾 Tennis Tournament - Semi-finals - 15th Oct" FontSize="16" Foreground="White"/>
-                    <ListViewItem Content="🏀 Basketball: Lakers vs Bulls - 20th Oct" FontSize="16" Foreground="White"/>
-                </ListView>
+                <TextBlock Text="Sports" Foreground="LightGray" FontSize="18" Margin="0,0,0,10"/>
+                <ListBox Foreground="LightGray" Background="#3F3F3F" BorderBrush="Transparent">
+                    <ListBoxItem Content="Football" Background="Transparent"/>
+                    <ListBoxItem Content="Basketball" Background="Transparent"/>
+                    <ListBoxItem Content="Tennis" Background="Transparent"/>
+                    <ListBoxItem Content="Cricket" Background="Transparent"/>
+                    <ListBoxItem Content="Hockey" Background="Transparent"/>
+                </ListBox>
+            </StackPanel>
+        </Border>
+
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.Background>
+                <ImageBrush ImageSource="images/hellyeah.jpg"/>
+            </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Background="#CC2F4F4F" Margin="5" Padding="10">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="🔥 Special Offer: Top Up Your Balance with Discounts!" 
+                               Foreground="White" 
+                               FontSize="20" 
+                               TextWrapping="Wrap" 
+                               TextAlignment="Center"/>
+                    <Button Content="Top Up Now" Background="#00AA00" Foreground="White" Padding="10,5" Margin="10"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Upcoming Events Section -->
+            <Border Grid.Row="1" Background="#CC3F3F3F" Margin="5" Padding="10">
+                <StackPanel>
+                    <TextBlock Text="Upcoming Events" FontSize="20" FontWeight="Bold" Foreground="LightGray" Margin="0,0,0,10"/>
+                    <ListView x:Name="UpcomingEventsListView" Background="Transparent">
+                        <!-- Event items will be added here dynamically -->
+                    </ListView>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <Border Grid.Row="1" Grid.Column="2" Background="#3F3F3F" Padding="10">
+            <StackPanel>
+                <TextBlock Text="My Account" FontSize="18" FontWeight="Bold" Foreground="LightGray" Margin="0,0,0,10"/>
+                <TextBlock Name="tbBalance" Text="Balance: $500" FontSize="16" Foreground="LightGreen"/>
+                <Button Content="Place a Bet" Background="#00AA00" Foreground="White" Padding="10,5" Margin="10,0"/>
+                <Button Content="Settings" Background="DarkSlateGray" Foreground="White" Padding="10,5" Margin="10,0"/>
             </StackPanel>
         </Border>
     </Grid>
-
-    <!-- Sidebar Right: Balance, Bets, Settings -->
-    <Border Grid.Row="1" Grid.Column="2" Background="#3F3F3F" Padding="10">
-        <!-- Gray Matching Sidebar -->
-        <StackPanel>
-            <TextBlock Text="My Account" FontSize="18" FontWeight="Bold" Foreground="LightGray" Margin="0,0,0,10"/>
-            <TextBlock Name="tbBalance" Text="Balance: $500" FontSize="16" Foreground="LightGreen"/>
-            <Button Content="Place a Bet" Background="#00AA00" Foreground="White" Padding="10,5" Margin="10,0"/>
-            <!-- Green Button -->
-            <Button Content="Settings" Background="DarkSlateGray" Foreground="White" Padding="10,5" Margin="10,0"/>
-        </StackPanel>
-    </Border>
-</Grid>
 </Window>
