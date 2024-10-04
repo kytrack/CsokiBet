@@ -178,8 +178,7 @@ namespace CsokiBet
                                 string enteredHash = ComputeSha256Hash(password);
 
                                 if (storedHash == enteredHash)
-                                {
-                                    MessageBox.Show("Sikeres bejelentkezés!");
+                                {                     
 
                                     // Felhasználói adatok mentése szöveges fájlba
                                     if (cbAutoLogin.IsChecked==true)

@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\betbonus.png" />
     <None Remove="images\email_icon.png" />
     <None Remove="images\hellyeah.jpg" />
     <None Remove="images\lock_icon.png" />
@@ -22,6 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="images\betbonus.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="images\email_icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
