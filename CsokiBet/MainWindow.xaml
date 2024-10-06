@@ -133,8 +133,8 @@
                                         </Style>
                                     </TextBox.Style>
                                 </TextBox>
-                                <TextBlock Margin="5,2" Text="Felhasználónév" Foreground="LightGray"
-                                           FontStyle="Italic" IsHitTestVisible="False" 
+                                <TextBlock Margin="5,2" Text="Email cím" Foreground="LightGray"
+                                           FontStyle="Italic" IsHitTestVisible="False" Name="emailfelhasznalonev"
                                            Visibility="{Binding ElementName=txtUsername, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                 <!-- Underline -->
                                 <Border BorderBrush="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
