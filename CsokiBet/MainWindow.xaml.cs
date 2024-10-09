@@ -32,31 +32,53 @@ namespace CsokiBet
     public partial class MainWindow : Window
     {
         private string connectionString = "Server=localhost;Database=csokibet;User ID=root;Password=;";
-        private string userFilePath = "user_data.txt"; // Fájl elérési útvonala a mentett adatokhoz
+        private string userFilePath = "user_data.txt"; 
         private FirebaseClient firebaseClient;
-        private static readonly string firebaseApiKey = "AIzaSyBXxbFR3nwUFni-dBOB4dg7i3C-Z0SNgcw"; // Itt add meg az API kulcsot!
+        private static readonly string firebaseApiKey = "AIzaSyBXxbFR3nwUFni-dBOB4dg7i3C-Z0SNgcw"; 
 
-        private bool isRegistering = false; // Flag to toggle between login and registration
+        private bool isRegistering = false;
         public MainWindow()
         {
             InitializeComponent();
-            // Initialize Firebase Admin SDK with service account
-            FirebaseApp.Create(new AppOptions()
-            {
-                Credential = GoogleCredential.FromFile("../../../csokibetwpf-firebase-adminsdk-sy0d7-d2ff938e02.json")
-            });
+            string FIREBASE_JSON_KEY_PATH = "../../../csokibetwpf-firebase-adminsdk-sy0d7-d2ff938e02.json"; // ez a régi dc-n van az új, TARTSD A GITIGNORE-BAN
 
-            // Initialize Firebase Database client
+            //az alábbi kódra azért van szükség mert a "FirebaseApp.Create" kezdetű kódot csak egyszer szabad lefuttatni a program indítása során, különben crashel
+            string filePath = "user_data.txt";
+            if (File.Exists(filePath))
+            {
+                string[] fileLines = File.ReadAllLines(filePath);
+                if (fileLines.Length == 1 && fileLines[0] == "logout")
+                {
+                    File.WriteAllText(filePath, string.Empty);
+                }
+                else
+                {
+                    FirebaseApp.Create(new AppOptions()
+                    {
+                        Credential = GoogleCredential.FromFile(FIREBASE_JSON_KEY_PATH)
+                    });
+                }
+            }
+            else
+            {
+                FirebaseApp.Create(new AppOptions()
+                {
+                    Credential = GoogleCredential.FromFile(FIREBASE_JSON_KEY_PATH)
+                });
+                
+            }
             firebaseClient = new FirebaseClient("https://csokibetwpf-default-rtdb.firebaseio.com/");
             AutoLogin();
         }
+
+
+
         private void btnRegisztralj_Click(object sender, RoutedEventArgs e)
         {
             isRegistering = !isRegistering;
 
             if (isRegistering)
             {
-                // Show registration fields
                 gridEmail.Visibility = Visibility.Visible;
                 gridConfirmPass.Visibility = Visibility.Visible;
                 tbregisztralj.Text = "JELENTKEZZ BE";
@@ -72,7 +94,6 @@ namespace CsokiBet
             }
             else
             {
-                // Hide registration fields
                 gridEmail.Visibility = Visibility.Collapsed;
                 gridConfirmPass.Visibility = Visibility.Collapsed;
                 tbregisztralj.Text = "REGISZTRÁLJ";
@@ -140,31 +161,35 @@ namespace CsokiBet
                     string savedUsername = userData[0];
                     string savedEmail = userData[1];
                     string savedPassword = userData[2];
+                    string autoLoginSwitch = userData[3];
 
-                    try
-                    {
-                        var token = await SignInWithEmailPassword(savedEmail, savedPassword);
-
-                        if (!string.IsNullOrEmpty(token))
+                    if (autoLoginSwitch == "true") {
+                        try
                         {
-                            var isActive = await IsUserActive(savedEmail);
-                            if (isActive)
+                            var token = await SignInWithEmailPassword(savedEmail, savedPassword);
+
+                            if (!string.IsNullOrEmpty(token))
                             {
-                                MessageBox.Show("Sikeres bejelentkezés");
-                                BetMenu betmenu = new BetMenu();
-                                betmenu.Show();
-                                this.Close();
-                            }
-                            else
-                            {
-                                MessageBox.Show("Email cím nincs visszaigazolva");
+                                var isActive = await IsUserActive(savedEmail);
+                                if (isActive)
+                                {
+                                    BetMenu betmenu = new BetMenu();
+                                    betmenu.Show();
+                                    this.Close();
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Hiba a hitelesítés során: email cím nincs visszaigazolva");
+                                }
                             }
                         }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Login failed: {ex.Message}");
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Login failed: {ex.Message}");
-                    }
+
+                    
                 }
             }
         }
@@ -206,15 +231,14 @@ namespace CsokiBet
                 //string query = "INSERT INTO bettors (Username, Password, Balance, Email, JoinDate, IsActive, Role) VALUES (@username, @password, @balance, @email, @joindate, @isactive @role)";
                 var user = new User(username, password, 0, email, "", 1, "Bettor");
                 AddUserToDatabase(user);
-                MessageBox.Show("Regisztráció sikeres!");
-                txtEmail.Clear();
-                txtPasscode.Clear();
-                txtConfirmPasscode.Clear();
-                txtUsername.Clear();
+                txtEmail.IsEnabled = false;
+                txtPasscode.IsEnabled = false;
+                txtConfirmPasscode.IsEnabled = false;
+                txtUsername.IsEnabled = false;
             }
             else
             {
-                //!!! ITT A username VÁLTOZÓ AZ EMAILNEK FELEL MEG, nem szép megoldás de nincs kedvem többet kodolni
+                //!!! ITT A username VÁLTOZÓ AZ EMAILNEK FELEL MEG
                 if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 {
                     MessageBox.Show("Felhasználónév és jelszó kitöltése kötelező!");
@@ -222,7 +246,6 @@ namespace CsokiBet
                 }
                 try
                 {
-                    // Login user using Firebase Authentication REST API
                     var token = await SignInWithEmailPassword(username, password);
                     if (!string.IsNullOrEmpty(token))
                     {
@@ -231,15 +254,16 @@ namespace CsokiBet
                         {
                             MessageBox.Show("Sikeres bejelentkezés");
 
-                            // Retrieve the actual username from the database where the email matches the current username (email)
                             string actualUsername = GetUsernameFromEmail(username);
 
-                            // Now we can hash the password and save user data
 
                             if (cbAutoLogin.IsChecked == true)
                             {
-                                // Save the user data with the actual username from the database
-                                SaveUserData(actualUsername, username, password);
+                                SaveUserData(actualUsername, username, password, "true");
+                            }
+                            else
+                            {
+                                SaveUserData(actualUsername, username, password, "false");
                             }
 
                             BetMenu betmenu = new BetMenu();
@@ -368,7 +392,7 @@ namespace CsokiBet
             var responseString = await response.Content.ReadAsStringAsync();
             dynamic responseJson = JsonConvert.DeserializeObject(responseString);
 
-            return responseJson.idToken; // Visszaadjuk a felhasználói tokent, ha sikeres a bejelentkezés
+            return responseJson.idToken;
         }
         private async Task<bool> IsUserActive(string email)
         {
@@ -423,7 +447,6 @@ namespace CsokiBet
                     try
                     {
                         command.ExecuteNonQuery();
-                        MessageBox.Show("Új felhasználó sikeresen hozzáadva! (MySql)");
                     }
                     catch (Exception ex)
                     {
@@ -438,7 +461,6 @@ namespace CsokiBet
 
                 try
                 {
-                    // Register user with Firebase Auth
                     var userRecordArgs = new UserRecordArgs()
                     {
                         Email = user.Email,
@@ -448,10 +470,7 @@ namespace CsokiBet
                     };
                     var userRecord = await FirebaseAuth.DefaultInstance.CreateUserAsync(userRecordArgs);
 
-                    // Add user data to Firebase Realtime Database
                     await AddUserToFirebase(userRecord.Email);
-
-                    MessageBox.Show("Registration successful!");
                     try
                     {
                         string recipient = user.Email;
@@ -482,8 +501,16 @@ namespace CsokiBet
                         {
                             smtp.Send(message);
                         }
+                        txtEmail.IsEnabled = true;
+                        txtPasscode.IsEnabled = true;
+                        txtConfirmPasscode.IsEnabled = true;
+                        txtUsername.IsEnabled = true;
 
-                        MessageBox.Show("Email sent successfully!");
+                        txtEmail.Clear();
+                        txtPasscode.Clear();
+                        txtConfirmPasscode.Clear();
+                        txtUsername.Clear();
+                        MessageBox.Show("A regisztáció sikeres, a visszaigazoló levelet elküldtük az email címedre!");
                     }
                     catch (Exception ex)
                     {
@@ -509,7 +536,7 @@ namespace CsokiBet
                 .PutAsync(new
                 {
                     email = email,
-                    isActive = false // Alapértelmezetten inaktív
+                    isActive = false
                 });
         }
         private void AddUserToDatabaseOnlyMySql(User user)
@@ -555,9 +582,9 @@ namespace CsokiBet
                 return builder.ToString();
             }
         }
-        private void SaveUserData(string username, string email, string passwordHash)
+        private void SaveUserData(string username, string email, string passwordHash, string autoLoginSwitch)
         {
-            File.WriteAllLines(userFilePath, new string[] { username, email, passwordHash });
+            File.WriteAllLines(userFilePath, new string[] { username, email, passwordHash, autoLoginSwitch});
         }
 
 
@@ -571,7 +598,6 @@ namespace CsokiBet
 
         private void txtPasscode_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            // Az új jelszó beírása esetén automatikusan eltünteti a szöveget
             var passwordBox = sender as PasswordBox;
 
             if (passwordBox != null && !string.IsNullOrEmpty(passwordBox.Password))
