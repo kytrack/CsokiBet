@@ -18,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Firebase.Auth" Version="1.0.0" />
+    <PackageReference Include="Firebase.Database" Version="1.0.0" />
+    <PackageReference Include="FirebaseAdmin" Version="3.0.1" />
     <PackageReference Include="MySql.Data" Version="9.0.0" />
     <PackageReference Include="Security.Cryptography" Version="1.7.2" />
   </ItemGroup>

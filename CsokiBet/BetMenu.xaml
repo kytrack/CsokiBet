@@ -96,15 +96,11 @@
             <!-- Settings Section -->
             <Border x:Name="SettingsPanel" Background="#1C3934" Padding="10" Margin="5" Visibility="Collapsed">
                 <StackPanel>
-                    <TextBlock Text="Settings" FontSize="18" FontWeight="Bold" Foreground="LightGray" Margin="0,0,0,10"/>
-                    
-                    <TextBlock Text="Email" Foreground="LightGray"/>
-                    <TextBox x:Name="EmailTextBox" Width="200" Background="#1F493F" Foreground="White"/>
+                    <TextBlock Text="Settings" FontSize="18" FontWeight="Bold" Foreground="LightGray" Margin="0,0,0,0"/>
 
-                    <TextBlock Text="Password" Foreground="LightGray" Margin="0,10,0,0"/>
-                    <PasswordBox x:Name="PasswordBox" Width="200" Background="#1F493F" Foreground="White"/>
+                    <TextBlock Text="Biztonság" Foreground="LightGray" FontWeight="Bold" Margin="0,5,0,0"/>
+                    <Button Name="btnPassWordReset" Content="Jelszó módosítása" Background="Red" Foreground="White" Width="120px" HorizontalAlignment="Left" Click="btnPassWordReset_Click"/>
 
-                    <Button Content="Save Changes" Background="#00AA00" Foreground="White" Padding="10,5" Click="SaveChangesButton_Click"/>
                 </StackPanel>
             </Border>
         </Grid>

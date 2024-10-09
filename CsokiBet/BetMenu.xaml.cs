@@ -3,6 +3,11 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using System.IO;
+using Firebase.Auth;
+
 namespace CsokiBet
 {
     public partial class BetMenu : Window
@@ -62,33 +67,6 @@ namespace CsokiBet
             SettingsPanel.Visibility = SettingsPanel.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private void SaveChangesButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic to save changes to email and password
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    // Assume you have the userId available to update user data
-                    int userId = 1; // Replace with the actual user ID
-
-                    string query = "UPDATE bettors SET Email = @Email, Password = @Password WHERE Id = @UserId";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@Email", EmailTextBox.Text);
-                        cmd.Parameters.AddWithValue("@Password", PasswordBox.Password); // Use PasswordBox.Password for the password
-                        cmd.Parameters.AddWithValue("@UserId", userId);
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-                MessageBox.Show("Settings saved successfully!");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error saving settings: {ex.Message}");
-            }
-        }
 
         private void btnLogOut_Click(object sender, RoutedEventArgs e)
         {
@@ -97,5 +75,27 @@ namespace CsokiBet
             login.Show();
             this.Close();
         }
+
+        private async void btnPassWordReset_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Replace with the user's email address
+                string email = "20.danko.daniel.janos@mechwart.com"; // This can be dynamically retrieved from your application
+
+                // Firebase configuration
+                var authProvider = new FirebaseAuthProvider(new FirebaseConfig("AIzaSyBXxbFR3nwUFni-dBOB4dg7i3C-Z0SNgcw"));
+
+                // Send password reset email
+                await authProvider.SendPasswordResetEmailAsync(email);
+
+                MessageBox.Show("Password reset email has been sent to: " + email);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error sending password reset email: {ex.Message}");
+            }
+        }
+
     }
 }
