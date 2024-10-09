@@ -185,7 +185,15 @@ namespace CsokiBet
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show($"Login failed: {ex.Message}");
+                            if (ex.Message == "Invalid login credentials.")
+                            {
+                                MessageBox.Show("Hibás felhasználónév vagy jelszó.");
+                            }
+                            else
+                            {
+                                MessageBox.Show($"Login failed: {ex.Message}");
+                            }
+                            
                         }
                     }
 
@@ -278,7 +286,14 @@ namespace CsokiBet
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Login failed: {ex.Message}");
+                    if (ex.Message == "Invalid login credentials.")
+                    {
+                        MessageBox.Show("Hibás felhasználónév vagy jelszó.");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Login failed: {ex.Message}");
+                    }
                 }
 
                 
