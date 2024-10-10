@@ -1,0 +1,72 @@
+﻿<Window x:Class="CsokiBet.AdminPanel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CsokiBet"
+        mc:Ignorable="d"
+        Title="AdminPanel" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!-- Main Content Section -->
+
+        <DataGrid x:Name="BettorDataGrid" AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Felhasználói ID" Binding="{Binding BettorsID}" />
+                <DataGridTextColumn Header="Felhasználónév" Binding="{Binding Username}" />
+                <DataGridTextColumn Header="Egyenleg" Binding="{Binding Balance}" />
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
+                <DataGridTextColumn Header="Csatlakozás dátuma" Binding="{Binding JoinDate}" />
+                <DataGridTextColumn Header="Aktív" Binding="{Binding IsActive}" />
+                <DataGridTextColumn Header="Szerep" Binding="{Binding Role}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel x:Name="UserDetailsPanel" Visibility="Visible" VerticalAlignment="Bottom" Grid.Row="1">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Email:" />
+                <TextBlock x:Name="EmailTextBlock" Width="200" IsHitTestVisible="False" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Felhasználónév:" />
+                <TextBox x:Name="UsernameTextBox" Width="200" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Jelszó:" />
+                <Button Content="Jelszó módosító email küldése" Click="SendPasswordResetEmail_Click" Width="200px"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Egyenleg:" />
+                <TextBox x:Name="BalanceTextBox" Width="200" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Aktív:" />
+                <ComboBox x:Name="IsActiveComboBox" Width="100">
+                    <ComboBoxItem Content="Aktív" Tag="1" />
+                    <ComboBoxItem Content="Inaktív" Tag="0" />
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Szerep:" />
+                <TextBox x:Name="RoleTextBox" Width="200" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Firebase státusz:" />
+                <TextBlock x:Name="FirebaseStatusTextBlock" Width="200" />
+            </StackPanel>
+
+
+            <Button Content="Módosítás" Click="ModifyBettor_Click" Width="200" HorizontalAlignment="Left"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

@@ -16,6 +16,7 @@ namespace CsokiBet
         private Random _random = new Random();
         private double playerBalance;
         private int bettorID;
+        private string role;
         private Border selectedEventTile = null;
 
         public BetMenu(string email, string username)
@@ -53,7 +54,7 @@ namespace CsokiBet
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    string query = "SELECT BettorsID, Balance FROM bettors WHERE Email = @Email";
+                    string query = "SELECT BettorsID, Balance, Role FROM bettors WHERE Email = @Email";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@Email", email);
@@ -63,6 +64,7 @@ namespace CsokiBet
                             {
                                 bettorID = reader.GetInt32("BettorsID");
                                 playerBalance = reader.GetDouble("Balance");
+                                role = reader.GetString("Role");
                                 tbBalance.Text = $"Balance: ${playerBalance}";
                             }
                             else
@@ -77,6 +79,10 @@ namespace CsokiBet
             catch (Exception ex)
             {
                 MessageBox.Show($"Error loading user: {ex.Message}");
+            }
+
+            if (role == "Admin") {
+                btnAdmin.Visibility = Visibility.Visible;
             }
         }
 
@@ -418,6 +424,13 @@ namespace CsokiBet
             {
                 MessageBox.Show($"Hiba történt a jelszó visszaállító e-mail küldésekor: {ex.Message}");
             }
+        }
+
+        private void btnAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            AdminPanel admin = new AdminPanel();
+            admin.Show();
+            this.Close();
         }
     }
 }
