@@ -1,7 +1,7 @@
 ﻿<Window x:Class="CsokiBet.BetMenu"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="BetMenu" Height="450" Width="800">
+        Title="BetMenu" Height="650" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -51,7 +51,7 @@
                 <Border.Background>
                     <ImageBrush ImageSource="images/betbonus.png"></ImageBrush>
                 </Border.Background>
-                
+
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,56,0,0">
                     <Button Padding="10,5" Margin="10" Height="30" Width="100">
                         <Button.Template>
@@ -85,33 +85,45 @@
             <Border Grid.Row="1" Background="#102923" Margin="5" Padding="10">
                 <StackPanel>
                     <TextBlock Text="Upcoming Events" FontSize="20" FontWeight="Bold" Foreground="LightGray" Margin="0,0,0,10"/>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <ListView x:Name="UpcomingEventsListView" Background="Transparent" MaxHeight="200">
-                            <!-- Dynamically Loaded Event Items -->
-                        </ListView>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Horizontal" x:Name="EventTilesPanel">
+                            <!-- Dynamically Loaded Event Items (Tiles) will go here -->
+                        </StackPanel>
                     </ScrollViewer>
-                </StackPanel>
-            </Border>
-
-            <!-- Settings Section -->
-            <Border x:Name="SettingsPanel" Background="#1C3934" Padding="10" Margin="5" Visibility="Collapsed">
-                <StackPanel>
-                    <TextBlock Text="Settings" FontSize="18" FontWeight="Bold" Foreground="LightGray" Margin="0,0,0,0"/>
-
-                    <TextBlock Text="Biztonság" Foreground="LightGray" FontWeight="Bold" Margin="0,5,0,0"/>
-                    <Button Name="btnPassWordReset" Content="Jelszó módosítása" Background="Red" Foreground="White" Width="120px" HorizontalAlignment="Left" Click="btnPassWordReset_Click"/>
-
                 </StackPanel>
             </Border>
         </Grid>
 
-        <!-- Right Sidebar (My Account) -->
-        <Border Grid.Row="1" Grid.Column="2" Background="#1C3934" Padding="10">
+        <!-- Right Sidebar for Betting -->
+        <Border Grid.Row="1" Grid.Column="2" Background="#1C3934" Padding="10" x:Name="BettingPanel">
             <StackPanel>
-                <TextBlock Text="My Account" FontSize="18" FontWeight="Bold" Foreground="LightGray" Margin="0,0,0,10"/>
-                <TextBlock Name="tbBalance" Text="Balance: $500" FontSize="16" Foreground="LightGreen"/>
-                <Button Content="Place a Bet" Background="#00AA00" Foreground="White" Padding="10,5" Margin="10,0"/>
+                <TextBlock Text="Place Bet" FontSize="18" FontWeight="Bold" Foreground="LightGray" Margin="0,0,0,10"/>
+                <TextBlock Name="tbBalance" Text="Balance: $500" FontSize="16" Foreground="LightGreen" Margin="0,0,0,10"/>
+
+                <!-- Betting Section - Initially Hidden -->
+                <StackPanel x:Name="BettingSection" Visibility="Collapsed">
+                    <TextBlock Text="Enter Amount:" Foreground="LightGray"/>
+                    <TextBox x:Name="AmountTextBox" Width="100" Background="#1F493F" Foreground="White" Margin="0,5" TextChanged="AmountTextBox_TextChanged"/>
+
+                    <!-- Várható nyeremény -->
+                    <TextBlock Text="Expected Winnings:" Foreground="LightGray"/>
+                    <TextBlock x:Name="WinningsTextBlock" Foreground="LightGreen" FontWeight="Bold" Text="0"/>
+
+                    <Button Content="Place Bet " Background="#00AA00" Foreground="White" Padding="10,5" Margin="10,0" Click="PlaceBet_Click"/>
+
+                    <TextBlock x:Name="ErrorMessage" Foreground="Red" Visibility="Collapsed"/>
+                </StackPanel>
             </StackPanel>
         </Border>
+
+        <!-- Extra Settings Section from first XAML -->
+        <Border x:Name="SettingsPanel" Background="#1C3934" Padding="10" Margin="5" Visibility="Collapsed" Grid.Row="1" Grid.Column="1">
+            <StackPanel>
+                <TextBlock Text="Settings" FontSize="18" FontWeight="Bold" Foreground="LightGray" Margin="0,0,0,0"/>
+                <TextBlock Text="Biztonság" Foreground="LightGray" FontWeight="Bold" Margin="0,5,0,0"/>
+                <Button Name="btnPassWordReset" Content="Jelszó módosítása" Background="Red" Foreground="White" Width="120px" HorizontalAlignment="Left" Click="btnPassWordReset_Click"/>
+            </StackPanel>
+        </Border>
+
     </Grid>
 </Window>

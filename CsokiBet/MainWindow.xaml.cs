@@ -32,15 +32,21 @@ namespace CsokiBet
     public partial class MainWindow : Window
     {
         private string connectionString = "Server=localhost;Database=csokibet;User ID=root;Password=;";
-        private string userFilePath = "user_data.txt"; 
+        private string userFilePath = "user_data.txt";
         private FirebaseClient firebaseClient;
-        private static readonly string firebaseApiKey = "AIzaSyBXxbFR3nwUFni-dBOB4dg7i3C-Z0SNgcw"; 
+        private static readonly string firebaseApiKey = "AIzaSyBXxbFR3nwUFni-dBOB4dg7i3C-Z0SNgcw";
+        string windowEmail = "";
+        string windowUsername = "";
 
         private bool isRegistering = false;
         public MainWindow()
         {
             InitializeComponent();
-            string FIREBASE_JSON_KEY_PATH = "../../../csokibetwpf-firebase-adminsdk-sy0d7-d2ff938e02.json"; // ez a régi dc-n van az új, TARTSD A GITIGNORE-BAN
+            //TARTSD A GITIGNORE-BAN!!!
+            //TARTSD A GITIGNORE-BAN!!!
+            //TARTSD A GITIGNORE-BAN!!!
+            //TARTSD A GITIGNORE-BAN!!!
+            string FIREBASE_JSON_KEY_PATH = "../../../firebase.json"; 
 
             //az alábbi kódra azért van szükség mert a "FirebaseApp.Create" kezdetű kódot csak egyszer szabad lefuttatni a program indítása során, különben crashel
             string filePath = "user_data.txt";
@@ -65,7 +71,7 @@ namespace CsokiBet
                 {
                     Credential = GoogleCredential.FromFile(FIREBASE_JSON_KEY_PATH)
                 });
-                
+
             }
             firebaseClient = new FirebaseClient("https://csokibetwpf-default-rtdb.firebaseio.com/");
             AutoLogin();
@@ -99,7 +105,7 @@ namespace CsokiBet
                 tbregisztralj.Text = "REGISZTRÁLJ";
                 btnLogin.Content = "Bejelentkezés";
                 tbvanfiok.Text = "Nincs fiókod?";
-                emailfelhasznalonev.Text = "Email cím"; 
+                emailfelhasznalonev.Text = "Email cím";
 
                 txtEmail.Clear();
                 txtPasscode.Clear();
@@ -163,7 +169,8 @@ namespace CsokiBet
                     string savedPassword = userData[2];
                     string autoLoginSwitch = userData[3];
 
-                    if (autoLoginSwitch == "true") {
+                    if (autoLoginSwitch == "true")
+                    {
                         try
                         {
                             var token = await SignInWithEmailPassword(savedEmail, savedPassword);
@@ -173,8 +180,8 @@ namespace CsokiBet
                                 var isActive = await IsUserActive(savedEmail);
                                 if (isActive)
                                 {
-                                    BetMenu betmenu = new BetMenu();
-                                    betmenu.Show();
+                                    BetMenu betMenu = new BetMenu(windowEmail, windowUsername);
+                                    betMenu.Show();
                                     this.Close();
                                 }
                                 else
@@ -193,11 +200,11 @@ namespace CsokiBet
                             {
                                 MessageBox.Show($"Login failed: {ex.Message}");
                             }
-                            
+
                         }
                     }
 
-                    
+
                 }
             }
         }
@@ -205,10 +212,10 @@ namespace CsokiBet
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            string email=txtEmail.Text;
-            string password=txtPasscode.Password;
-            string passwordagain=txtConfirmPasscode.Password;
-            string username=txtUsername.Text;
+            string email = txtEmail.Text;
+            string password = txtPasscode.Password;
+            string passwordagain = txtConfirmPasscode.Password;
+            string username = txtUsername.Text;
 
             if (isRegistering)
             {
@@ -274,8 +281,8 @@ namespace CsokiBet
                                 SaveUserData(actualUsername, username, password, "false");
                             }
 
-                            BetMenu betmenu = new BetMenu();
-                            betmenu.Show();
+                            BetMenu betMenu = new BetMenu(windowEmail, windowUsername);
+                            betMenu.Show();
                             this.Close();
                         }
                         else
@@ -296,7 +303,7 @@ namespace CsokiBet
                     }
                 }
 
-                
+
 
 
 
@@ -569,7 +576,7 @@ namespace CsokiBet
                     command.Parameters.AddWithValue("@joindate", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                     command.Parameters.AddWithValue("@isactive", 1);
                     command.Parameters.AddWithValue("@role", user.Role);
-                    
+
 
                     connection.Open();
                     try
@@ -599,7 +606,9 @@ namespace CsokiBet
         }
         private void SaveUserData(string username, string email, string passwordHash, string autoLoginSwitch)
         {
-            File.WriteAllLines(userFilePath, new string[] { username, email, passwordHash, autoLoginSwitch});
+            File.WriteAllLines(userFilePath, new string[] { username, email, passwordHash, autoLoginSwitch });
+            windowEmail = email;
+            windowUsername = username;
         }
 
 
@@ -617,15 +626,15 @@ namespace CsokiBet
 
             if (passwordBox != null && !string.IsNullOrEmpty(passwordBox.Password))
             {
-                if (passwordBox.Name==txtConfirmPasscode.Name)
+                if (passwordBox.Name == txtConfirmPasscode.Name)
                 {
-                    tbconfirmpasscode.Visibility=Visibility.Hidden;
+                    tbconfirmpasscode.Visibility = Visibility.Hidden;
                 }
                 else
                 {
                     tbpasscode.Visibility = Visibility.Hidden;
                 }
-               
+
             }
             else
             {
@@ -637,7 +646,7 @@ namespace CsokiBet
                 {
                     tbpasscode.Visibility = Visibility.Visible;
                 }
-                
+
             }
         }
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
