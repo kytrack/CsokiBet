@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\balance_icon.png" />
     <None Remove="images\betbonus.png" />
     <None Remove="images\email_icon.png" />
     <None Remove="images\hellyeah.jpg" />
@@ -21,11 +22,16 @@
     <PackageReference Include="Firebase.Auth" Version="1.0.0" />
     <PackageReference Include="Firebase.Database" Version="1.0.0" />
     <PackageReference Include="FirebaseAdmin" Version="3.0.1" />
+    <PackageReference Include="MaterialDesignColors" Version="3.1.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="5.1.0" />
     <PackageReference Include="MySql.Data" Version="9.0.0" />
     <PackageReference Include="Security.Cryptography" Version="1.7.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="images\balance_icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="images\betbonus.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
