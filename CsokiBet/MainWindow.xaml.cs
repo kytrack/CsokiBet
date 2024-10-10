@@ -157,17 +157,18 @@ namespace CsokiBet
                 }
             }*/
 
-
             if (File.Exists(userFilePath))
             {
                 string[] userData = File.ReadAllLines(userFilePath);
 
-                if (userData.Length == 3)
+                if (userData.Length == 4)
                 {
                     string savedUsername = userData[0];
                     string savedEmail = userData[1];
                     string savedPassword = userData[2];
                     string autoLoginSwitch = userData[3];
+                    windowEmail = savedEmail;
+                    windowUsername = savedUsername;
 
                     if (autoLoginSwitch == "true")
                     {
@@ -203,9 +204,15 @@ namespace CsokiBet
 
                         }
                     }
+                    else
+                    {
+                    }
 
 
                 }
+            }
+            else
+            {
             }
         }
 
