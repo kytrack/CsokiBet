@@ -281,7 +281,7 @@ namespace CsokiBet
                 var betInfo = (dynamic)AmountTextBox.Tag;
                 if (betInfo == null)
                 {
-                    WinningsTextBlock.Text = "Invalid bet selection";
+                    WinningsTextBlock.Text = "Válassz eseményt";
                     return;
                 }
                 double odds = betInfo.Odds;
@@ -290,7 +290,7 @@ namespace CsokiBet
             }
             else
             {
-                WinningsTextBlock.Text = "Invalid amount";
+                WinningsTextBlock.Text = "Nem megfelelő összeg";
             }
         }
 
@@ -307,7 +307,7 @@ namespace CsokiBet
             var betInfo = (dynamic)AmountTextBox.Tag;
             if (betInfo == null)
             {
-                ErrorMessage.Text = "Please select an event to bet on.";
+                ErrorMessage.Text = "Válassz eseményt";
                 ErrorMessage.Visibility = Visibility.Visible;
                 return;
             }
@@ -330,13 +330,13 @@ namespace CsokiBet
                 }
                 else
                 {
-                    ErrorMessage.Text = "Insufficient balance to place this bet.";
+                    ErrorMessage.Text = "Nincs elegendő egyenleged";
                     ErrorMessage.Visibility = Visibility.Visible;
                 }
             }
             else
             {
-                ErrorMessage.Text = "Invalid amount.";
+                ErrorMessage.Text = "Nem megfelelő érték";
                 ErrorMessage.Visibility = Visibility.Visible;
             }
         }
