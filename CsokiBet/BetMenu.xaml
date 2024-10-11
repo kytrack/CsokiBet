@@ -23,6 +23,7 @@
                 <Button x:Name="btnLogOut" Content="Log Out" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" Click="btnLogOut_Click"/>
                 <Button x:Name="SettingsButton" Content="Settings" Background="DarkSlateGray" Foreground="White" Padding="10,5" Margin="10,0" Click="SettingsButton_Click"/>
                 <Button x:Name="btnAdmin" Content="Admin panel" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" Visibility="Collapsed" Click="btnAdmin_Click"/>
+                <Button x:Name="btnOrganizer" Content="Szervező panel" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" Visibility="Collapsed" Click="btnOrganizer_Click"/>
             </StackPanel>
         </Border>
 

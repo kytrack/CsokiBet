@@ -83,6 +83,11 @@ namespace CsokiBet
 
             if (role == "Admin") {
                 btnAdmin.Visibility = Visibility.Visible;
+                btnOrganizer.Visibility = Visibility.Visible;
+            }
+            if (role == "Organizer")
+            {
+                btnOrganizer.Visibility = Visibility.Visible;
             }
         }
 
@@ -430,6 +435,13 @@ namespace CsokiBet
         {
             AdminPanel admin = new AdminPanel();
             admin.Show();
+            this.Close();
+        }
+
+        private void btnOrganizer_Click(object sender, RoutedEventArgs e)
+        {
+            OrganizerPanel organizer = new OrganizerPanel();
+            organizer.Show();
             this.Close();
         }
     }
