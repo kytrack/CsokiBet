@@ -56,8 +56,13 @@
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Szerep:" />
-                <TextBox x:Name="RoleTextBox" Width="200" />
+                <ComboBox x:Name="RoleComboBox" Width="200">
+                    <ComboBoxItem Content="Bettor" Tag="Bettor" />
+                    <ComboBoxItem Content="Organizer" Tag="Organizer" />
+                    <ComboBoxItem Content="Admin" Tag="Admin" />
+                </ComboBox>
             </StackPanel>
+
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Firebase státusz:" />

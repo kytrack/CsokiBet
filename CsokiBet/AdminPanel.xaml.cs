@@ -33,22 +33,37 @@ namespace CsokiBet
             }
         }
 
-        private void DataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (BettorDataGrid.SelectedItem is DataRowView selectedRow)
             {
                 UsernameTextBox.Text = selectedRow["Username"].ToString();
                 BalanceTextBox.Text = selectedRow["Balance"].ToString();
-                IsActiveComboBox.SelectedValue = selectedRow["IsActive"].ToString() == "1" ? "Aktív" : "Inaktív";
-                RoleTextBox.Text = selectedRow["Role"].ToString();
 
-                // Display the email address
+                // IsActive státusz beállítása
+                int isActive = Convert.ToInt32(selectedRow["IsActive"]);
+                IsActiveComboBox.SelectedItem = isActive == 1 ? IsActiveComboBox.Items[0] : IsActiveComboBox.Items[1];
+
+                // Szerepkör beállítása ComboBox-ban
+                string role = selectedRow["Role"].ToString();
+                foreach (ComboBoxItem item in RoleComboBox.Items)
+                {
+                    if (item.Tag.ToString() == role)
+                    {
+                        RoleComboBox.SelectedItem = item;
+                        break;
+                    }
+                }
+
                 EmailTextBlock.Text = selectedRow["Email"].ToString();
 
-                // Check Firebase status
+                // Firebase státusz ellenőrzés
                 CheckFirebaseStatus(selectedRow["Email"].ToString());
             }
         }
+
+
+
 
         private void CheckFirebaseStatus(string email)
         {
@@ -74,8 +89,10 @@ namespace CsokiBet
                 decimal balance = Convert.ToDecimal(BalanceTextBox.Text);
                 int isActive = IsActiveComboBox.SelectedItem is ComboBoxItem selectedItem
                     ? Convert.ToInt32(selectedItem.Tag)
-                    : 0; // Default to 0 if not selected
-                string role = RoleTextBox.Text;
+                    : 0;
+
+                // A kiválasztott szerepkör értéke a ComboBox-ból
+                string role = (RoleComboBox.SelectedItem as ComboBoxItem)?.Tag.ToString();
 
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
@@ -89,7 +106,7 @@ namespace CsokiBet
                     command.ExecuteNonQuery();
                 }
 
-                LoadBettors(); // Refresh the data grid
+                LoadBettors(); // Frissítjük az adatokat a DataGrid-ben
             }
         }
 
