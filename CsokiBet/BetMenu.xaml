@@ -7,7 +7,7 @@
         AllowsTransparency="True"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Style="{StaticResource MaterialDesignWindow}"
-        WindowStyle="None"  MouseDown="Window_MouseDown">
+        WindowStyle="None"  MouseDown="Window_MouseDown" Icon="images/csokibetlogo.png">
     <Window.Resources>
 
         <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
@@ -174,7 +174,7 @@
         <!-- Top Bar -->
         <Border Grid.Row="0" Grid.ColumnSpan="3" Background="#1F493F">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-                <Image Source="images/csokibetlogo.png" Width="110" Height="110" Margin="0,0,0,-3"/>
+                <Image Source="images/csokibetlogo.png" Width="100" Height="100" Margin="0,0,0,-3"/>
                 <Button Content="Home" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16"/>
                 <Button Content="My Wallet" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16"/>
                 <Button x:Name="btnLogOut" Content="Log Out" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" Click="btnLogOut_Click"/>
@@ -186,13 +186,15 @@
         <Border Grid.Row="1" Grid.Column="0" Background="#1C3934" Padding="10">
             <StackPanel>
                 <TextBlock Text="Sports" Foreground="LightGray" FontSize="18" Margin="0,0,0,10"/>
-                <ListBox Foreground="LightGray" Background="#1F493F" BorderBrush="Transparent">
-                    <ListBoxItem Content="Football" Background="Transparent"/>
+                <Border Background="#1F493F" CornerRadius="10">
+                    <ListBox Foreground="LightGray" BorderBrush="Transparent">
+                        <ListBoxItem Content="Football" Background="Transparent"/>
                     <ListBoxItem Content="Basketball" Background="Transparent"/>
                     <ListBoxItem Content="Tennis" Background="Transparent"/>
                     <ListBoxItem Content="Cricket" Background="Transparent"/>
                     <ListBoxItem Content="Hockey" Background="Transparent"/>
                 </ListBox>
+                </Border>
             </StackPanel>
         </Border>
 
@@ -204,7 +206,7 @@
             </Grid.RowDefinitions>
 
             <!-- Special Offer Section -->
-            <Border Grid.Row="0" Margin="5" Padding="10">
+            <Border Grid.Row="0" Margin="5" Padding="10" CornerRadius="10">
                 <Border.Background>
                     <ImageBrush ImageSource="images/betbonus.png"></ImageBrush>
                 </Border.Background>
@@ -241,20 +243,36 @@
             <!-- Upcoming Events Section -->
             <Border Grid.Row="1" Background="#17302A" Margin="5" Padding="10">
                 <StackPanel>
+                    <!-- Keresősáv -->
+                   
+
+                    <!-- Események szekció -->
                     <TextBlock Text="Események" Width="110" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="LightGray" Margin="0,0,0,10"/>
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Horizontal" x:Name="EventTilesPanel">
-                            <!-- Dynamically Loaded Event Items (Tiles) will go here -->
+                            <!-- Dinamikusan betöltött eseménykártyák -->
                         </StackPanel>
                     </ScrollViewer>
+
+                    <Border Margin="0,25,0,0" Background="#1F493F" Height="30" Width="600" CornerRadius="15"/>
+                    <Image Margin="142,-30,0,0" HorizontalAlignment="Left" Source="images/search_icon.png"  Width="15" Height="15" />
+                    <TextBox x:Name="SearchTextBox"
+                             Width="550"
+                             Height="30"
+                             Margin="0,-30,0,10" 
+                             TextChanged="SearchTextBox_TextChanged"
+                             materialDesign:HintAssist.Hint="Esemény kereső"
+                             materialDesign:HintAssist.IsFloating="True"
+                             materialDesign:TextFieldAssist.HasClearButton="True"/>
                 </StackPanel>
             </Border>
+
         </Grid>
 
         <!-- Right Sidebar for Betting -->
         <Border Grid.Row="1" Grid.Column="2" Background="#1C3934"  x:Name="BettingPanel">
             <StackPanel>
-                <Border Margin="0,5,0,0" Background="#102923" CornerRadius="10" Padding="3">
+                <Border Margin="5,5,5,5" Background="#102923" CornerRadius="10" Padding="3">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -266,15 +284,16 @@
                         </Grid.ColumnDefinitions>
 
                         <Image Source="images/balance_icon.png" Margin="5,3,0,2" Width="12" Height="12" Grid.Column="0"/>
-                        <TextBlock Text="Egyenleg" FontSize="12" Foreground="White" Margin="2,4,5,-4" Grid.Column="1"/>
+                        <TextBlock Text="Egyenleg" FontSize="12" Foreground="White" Margin="2,2,5,-2" Grid.Column="1"/>
 
-                        <TextBlock x:Name="tbBalance" Text="$50000" FontSize="13" Foreground="White" Grid.Column="2" HorizontalAlignment="Center" Margin="0,4,0,-4"/>
+                        <TextBlock x:Name="tbBalance" Text="$50000" FontSize="13" Foreground="White" Grid.Column="2" HorizontalAlignment="Center" Margin="0,2,0,-2"/>
                     </Grid>
                 </Border>
 
 
                 <!-- Betting Section - Initially Hidden -->
-                <StackPanel Margin="5,10,5,0" Background="#1F493F" x:Name="BettingSection" Visibility="Visible">
+                <Border  Background="#1F493F" CornerRadius="10" Margin="5,10,5,0">
+                <StackPanel Margin="5,10,5,0" x:Name="BettingSection" Visibility="Visible">
 
 
 
@@ -286,7 +305,7 @@
                     <Border 
             Background="#102923" 
             CornerRadius="10" 
-            Margin="0,10,0,0" Width="130" Height="20"/>
+            Margin="0,5,0,0" Width="130" Height="20"/>
 
 
                     <TextBox
@@ -299,7 +318,15 @@
                         materialDesign:HintAssist.Hint="Tét értéke"
                         materialDesign:HintAssist.IsFloating="True"
                         materialDesign:TextFieldAssist.HasClearButton="True"
-                        Foreground="White" />
+                        Foreground="White">
+                        <TextBox.Resources>
+                            <Style TargetType="{x:Type materialDesign:SmartHint}">
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                            </Style>
+                        </TextBox.Resources>
+
+                    </TextBox>
+                        
 
 
 
@@ -308,7 +335,7 @@
                     <TextBlock HorizontalAlignment="Center" x:Name="WinningsTextBlock" Foreground="LightGreen" FontWeight="Bold" Text="0"/>
 
 
-                    <Button Margin="10,0,10,10" BorderBrush="Transparent" FontWeight="Bold" Height="35" Style="{StaticResource TransparentButtonStyle}" x:Name="PlaceBetButton" Content="Fogadás" Padding="10,5" Click="PlaceBet_Click">
+                    <Button Margin="10,0,10,15" BorderBrush="Transparent" FontWeight="Bold" Height="35" Style="{StaticResource TransparentButtonStyle}" x:Name="PlaceBetButton" Content="Fogadás" Padding="10,5" Click="PlaceBet_Click">
                         <Button.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                 <GradientStop Color="#8BE95D" Offset="0.0"/>
@@ -322,6 +349,8 @@
 
                     <TextBlock HorizontalAlignment="Center" FontSize="11" x:Name="ErrorMessage" Foreground="Red" Visibility="Collapsed"/>
                 </StackPanel>
+                </Border>
+
             </StackPanel>
         </Border>
 

@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen" 
         Background="Transparent"
         AllowsTransparency="True"
-        WindowStyle="None"  MouseDown="Window_MouseDown">
+        WindowStyle="None"  MouseDown="Window_MouseDown" Icon="images/csokibetlogo.png">
     <Window.Resources>
 
         <SolidColorBrush x:Key="brushWatermarkBackground" Color="White" />

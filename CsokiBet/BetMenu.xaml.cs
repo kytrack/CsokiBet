@@ -123,6 +123,9 @@ namespace CsokiBet
             }
         }
 
+        // Lista az összes eseménykártya tárolására
+        private List<Border> allEventTiles = new List<Border>();
+
         private void LoadUpcomingEvents()
         {
             try
@@ -142,96 +145,13 @@ namespace CsokiBet
                                 string category = reader.GetString("Category");
                                 string location = reader.GetString("Location");
 
-                                double odds = Math.Round(1.5 + _random.NextDouble() * 2, 2);
+                                // Esemény kártya létrehozása és beállítása
+                                Border eventTile = CreateEventTile(eventID, eventName, category, location);
 
-                                Border eventTile = new Border
-                                {
-                                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#102923")),
-                                    CornerRadius = new CornerRadius(10),
-                                    Width = 200,
-                                    Height = 150,
-                                    Margin = new Thickness(10)
-                                };
+                                // Mentse el az összes eseményt a listába
+                                allEventTiles.Add(eventTile);
 
-                                // A DockPanel használata a StackPanel helyett
-                                DockPanel tileContent = new DockPanel();
-
-                                // Category text (mindig a tetején marad a DockPanel Dock-ing segítségével)
-                                TextBlock categoryText = new TextBlock
-                                {
-                                    Text = $"{category}",
-                                    Foreground = Brushes.White,
-                                    FontWeight = FontWeights.Bold,
-                                    FontSize = 14,
-                                    TextAlignment = TextAlignment.Center,
-                                    VerticalAlignment = VerticalAlignment.Top,
-                                    Margin = new Thickness(0, 10, 0, 0)
-                                };
-                                DockPanel.SetDock(categoryText, Dock.Top); // Fent tartjuk a DockPanelben
-                                tileContent.Children.Add(categoryText);
-
-                                // StackPanel a tartalom többi részének
-                                StackPanel eventInfoPanel = new StackPanel
-                                {
-                                    Orientation = Orientation.Vertical,
-                                    HorizontalAlignment = HorizontalAlignment.Center,
-                                    VerticalAlignment = VerticalAlignment.Center
-                                };
-
-                                // Event name
-                                TextBlock eventText = new TextBlock
-                                {
-                                    Text = $"{eventName}",
-                                    Foreground = Brushes.White,
-                                    FontWeight = FontWeights.Bold,
-                                    FontSize = 14,
-                                    TextAlignment = TextAlignment.Center,
-                                    TextWrapping = TextWrapping.Wrap,
-                                    MaxWidth = 180 // Maximális szélesség a kártyához igazítva
-                                };
-                                eventInfoPanel.Children.Add(eventText);
-
-                                // Odds text
-                                TextBlock oddsText = new TextBlock
-                                {
-                                    Text = $"Odds: {odds:F2}",
-                                    Foreground = Brushes.LightGreen,
-                                    FontWeight = FontWeights.Bold,
-                                    FontSize = 12,
-                                    TextAlignment = TextAlignment.Center
-                                };
-                                eventInfoPanel.Children.Add(oddsText);
-
-                                // Location text
-                                TextBlock locationText = new TextBlock
-                                {
-                                    Text = location,
-                                    Foreground = Brushes.LightGray,
-                                    FontSize = 12,
-                                    TextAlignment = TextAlignment.Center
-                                };
-                                eventInfoPanel.Children.Add(locationText);
-
-                                // Bet button
-                                Button betButton = new Button
-                                {
-                                    Content = "Bet",
-                                    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1C3934")),
-                                    BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1C3934")),
-                                    Foreground = Brushes.White,
-                                    Margin = new Thickness(5),
-                                    Padding = new Thickness(5),
-                                    Tag = new { EventID = eventID, Odds = odds },
-                                    Style = (Style)FindResource("TransparentButtonStyle")
-                                };
-                                betButton.Click += BetButton_Click;
-                                eventInfoPanel.Children.Add(betButton);
-
-                                // Az eventInfoPanel a DockPanel maradék helyén helyezkedik el
-                                tileContent.Children.Add(eventInfoPanel);
-
-                                eventTile.Child = tileContent;
-
+                                // Add hozzá az esemény kártyát a megjelenített panelhez
                                 EventTilesPanel.Children.Add(eventTile);
                             }
                         }
@@ -243,6 +163,131 @@ namespace CsokiBet
                 MessageBox.Show($"Error loading events: {ex.Message}");
             }
         }
+
+        // Esemény kártya létrehozása
+        private Border CreateEventTile(int eventID, string eventName, string category, string location)
+        {
+            double odds = Math.Round(1.5 + _random.NextDouble() * 2, 2);
+
+            Border eventTile = new Border
+            {
+                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#102923")),
+                CornerRadius = new CornerRadius(10),
+                Width = 200,
+                Height = 150,
+                Margin = new Thickness(10)
+            };
+
+            // DockPanel a tartalomhoz
+            DockPanel tileContent = new DockPanel();
+
+            // Kategória TextBlock (a DockPanel tetejére rögzítve)
+            TextBlock categoryText = new TextBlock
+            {
+                Text = $"{category}",
+                Foreground = Brushes.White,
+                FontWeight = FontWeights.Bold,
+                FontSize = 14,
+                TextAlignment = TextAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Top,
+                Margin = new Thickness(0, 10, 0, 0)
+            };
+            DockPanel.SetDock(categoryText, Dock.Top);
+            tileContent.Children.Add(categoryText);
+
+            // StackPanel a többi tartalomhoz
+            StackPanel eventInfoPanel = new StackPanel
+            {
+                Orientation = Orientation.Vertical,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            // Esemény neve
+            TextBlock eventText = new TextBlock
+            {
+                Text = $"{eventName}",
+                Foreground = Brushes.White,
+                FontWeight = FontWeights.Bold,
+                FontSize = 14,
+                TextAlignment = TextAlignment.Center,
+                TextWrapping = TextWrapping.Wrap,
+                MaxWidth = 180
+            };
+            eventInfoPanel.Children.Add(eventText);
+
+            // Odds szöveg
+            TextBlock oddsText = new TextBlock
+            {
+                Text = $"Odds: {odds:F2}",
+                Foreground = Brushes.LightGreen,
+                FontWeight = FontWeights.Bold,
+                FontSize = 12,
+                TextAlignment = TextAlignment.Center
+            };
+            eventInfoPanel.Children.Add(oddsText);
+
+            // Helyszín szöveg
+            TextBlock locationText = new TextBlock
+            {
+                Text = location,
+                Foreground = Brushes.LightGray,
+                FontSize = 12,
+                TextAlignment = TextAlignment.Center
+            };
+            eventInfoPanel.Children.Add(locationText);
+
+            // Fogadás gomb
+            Button betButton = new Button
+            {
+                Content = "Bet",
+                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1C3934")),
+                BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1C3934")),
+                Foreground = Brushes.White,
+                Margin = new Thickness(5),
+                Padding = new Thickness(5),
+                Tag = new { EventID = eventID, Odds = odds },
+                Style = (Style)FindResource("TransparentButtonStyle")
+            };
+            betButton.Click += BetButton_Click;
+            eventInfoPanel.Children.Add(betButton);
+
+            tileContent.Children.Add(eventInfoPanel);
+            eventTile.Child = tileContent;
+
+            return eventTile;
+        }
+
+
+        // Keresési szöveg változási eseménykezelő
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchText = SearchTextBox.Text.ToLower();
+
+            // Szűrés a beírt szöveg alapján
+            var filteredTiles = allEventTiles.Where(tile =>
+            {
+                var stackPanel = tile.Child as DockPanel;
+                if (stackPanel != null)
+                {
+                    var eventNameTextBlock = stackPanel.Children.OfType<StackPanel>()
+                        .FirstOrDefault()?.Children.OfType<TextBlock>().FirstOrDefault();
+                    if (eventNameTextBlock != null)
+                    {
+                        return eventNameTextBlock.Text.ToLower().Contains(searchText);
+                    }
+                }
+                return false;
+            }).ToList();
+
+            // Frissítés
+            EventTilesPanel.Children.Clear();
+            foreach (var tile in filteredTiles)
+            {
+                EventTilesPanel.Children.Add(tile);
+            }
+        }
+
 
 
         private void BetButton_Click(object sender, RoutedEventArgs e)
