@@ -4,9 +4,10 @@ using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using FirebaseAdmin;
-using FirebaseAdmin.Auth;
+using FirebaseAdmin.Auth; // FirebaseAdmin Auth SDK
 using Google.Apis.Auth.OAuth2;
-using Firebase.Auth;
+using Firebase.Auth; // Firebase.Auth SDK (REST API)
+using System.Windows.Media;
 
 namespace CsokiBet
 {
@@ -17,7 +18,56 @@ namespace CsokiBet
         public AdminPanel()
         {
             InitializeComponent();
-            LoadBettors();
+            InitializeFirebase();  // Firebase inicializálása
+            LoadBettors();  // Bettor-ok betöltése a DataGrid-be
+        }
+
+        private void InitializeFirebase()
+        {
+            // Ellenőrizzük, hogy már létezik-e az alapértelmezett FirebaseApp
+            if (FirebaseApp.DefaultInstance == null)
+            {
+                FirebaseApp.Create(new AppOptions()
+                {
+                    Credential = GoogleCredential.FromFile("../../../firebase.json")
+                });
+            }
+        }
+
+
+        private async void CheckFirebaseStatus(string email)
+        {
+            FirebaseStatusTextBlock.Foreground = new SolidColorBrush(Colors.Black);
+            FirebaseStatusTextBlock.Text = "Betöltés...";
+            try
+            {
+                // FirebaseAdmin felhasználó lekérdezése az email cím alapján
+                FirebaseAdmin.Auth.UserRecord userRecord = await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.GetUserByEmailAsync(email);
+
+                if (userRecord != null)
+                {
+                    FirebaseStatusTextBlock.Foreground = new SolidColorBrush(Colors.Green);
+                    FirebaseStatusTextBlock.Text = "Szinkronizált";
+                }
+                else
+                {
+                    FirebaseStatusTextBlock.Foreground = new SolidColorBrush(Colors.Red);
+                    FirebaseStatusTextBlock.Text = "Nincs szinkronizálva (csak MySql)";
+                }
+            }
+            catch (FirebaseAdmin.Auth.FirebaseAuthException ex)
+            {
+                // Ha nincs ilyen email a Firebase-ben
+                if (ex.AuthErrorCode == FirebaseAdmin.Auth.AuthErrorCode.UserNotFound)
+                {
+                    FirebaseStatusTextBlock.Foreground = new SolidColorBrush(Colors.Red);
+                    FirebaseStatusTextBlock.Text = "Nincs szinkronizálva (csak MySql)";
+                }
+                else
+                {
+                    MessageBox.Show($"Hiba történt a Firebase ellenőrzésekor: {ex.Message}");
+                }
+            }
         }
 
         private void LoadBettors()
@@ -57,27 +107,9 @@ namespace CsokiBet
 
                 EmailTextBlock.Text = selectedRow["Email"].ToString();
 
-                // Firebase státusz ellenőrzés
+                // Firebase státusz ellenőrzése
                 CheckFirebaseStatus(selectedRow["Email"].ToString());
             }
-        }
-
-
-
-
-        private void CheckFirebaseStatus(string email)
-        {
-            // Implement Firebase API call to check if the email is registered
-            // Set FirebaseStatusTextBlock based on the result
-            // Example:
-            bool isRegistered = CheckEmailInFirebase(email); // Replace with actual check
-            FirebaseStatusTextBlock.Text = isRegistered ? "Szinkronizált" : "Nincs szinkronizálva";
-        }
-
-        private bool CheckEmailInFirebase(string email)
-        {
-            // TODO: Implement the logic to check if the email exists in Firebase
-            return false; // Placeholder
         }
 
         private void ModifyBettor_Click(object sender, RoutedEventArgs e)
@@ -116,7 +148,7 @@ namespace CsokiBet
             {
                 string email = EmailTextBlock.Text;
 
-                // Firebase konfiguráció
+                // Firebase konfiguráció a Firebase REST API használatával
                 var authProvider = new FirebaseAuthProvider(new FirebaseConfig("AIzaSyBXxbFR3nwUFni-dBOB4dg7i3C-Z0SNgcw"));
 
                 // Jelszó-visszaállító e-mail küldése
@@ -129,6 +161,5 @@ namespace CsokiBet
                 MessageBox.Show($"Hiba történt a jelszó visszaállító e-mail küldésekor: {ex.Message}");
             }
         }
-
     }
 }
