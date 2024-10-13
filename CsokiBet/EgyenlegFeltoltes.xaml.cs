@@ -37,9 +37,8 @@ namespace CsokiBet
                 try
                 {
                     conn.Open();
-
-                    // A felhasználónév alapján frissítjük a Balance mezőt
-                    string username = "vakond"; // Cseréld ki a tényleges felhasználónévre
+                    string[] lines = System.IO.File.ReadAllLines("user_data.txt");
+                    string username = lines[0];
                     string query = "UPDATE bettors SET Balance = Balance + @Amount WHERE Username = @Username";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -62,6 +61,30 @@ namespace CsokiBet
                 {
                     MessageBox.Show($"Hiba történt: {ex.Message}");
                 }
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string[] lines = System.IO.File.ReadAllLines("user_data.txt");
+
+            // Ellenőrizzük, hogy legalább két sor van-e
+            if (lines.Length >= 2)
+            {
+                // Felhasználónév az első sorban, email a második sorban
+                string windowUsername = lines[0];
+                string windowEmail = lines[1];
+
+                // BetMenu létrehozása és megjelenítése
+                BetMenu betMenu = new BetMenu(windowEmail, windowUsername);
+                betMenu.Show();
+
+                // Jelenlegi ablak bezárása
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("A user_data.txt fájl nem tartalmaz elegendő adatot.");
             }
         }
     }
