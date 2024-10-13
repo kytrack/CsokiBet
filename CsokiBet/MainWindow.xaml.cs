@@ -251,7 +251,7 @@ namespace CsokiBet
                     return;
                 }
                 //string query = "INSERT INTO bettors (Username, Password, Balance, Email, JoinDate, IsActive, Role) VALUES (@username, @password, @balance, @email, @joindate, @isactive @role)";
-                var user = new User(username, password, 0, email, "", 1, "Bettor");
+                var user = new User(username, password, 20, email, "", 1, "Bettor");
                 AddUserToDatabase(user);
                 txtEmail.IsEnabled = false;
                 txtPasscode.IsEnabled = false;
@@ -465,7 +465,7 @@ namespace CsokiBet
                 {
                     command.Parameters.AddWithValue("@username", user.Username);
                     command.Parameters.AddWithValue("@password", ComputeSha256Hash(user.Password)); //ITT KELL AZ SHA
-                    command.Parameters.AddWithValue("@balance", 0);
+                    command.Parameters.AddWithValue("@balance", 20);
                     command.Parameters.AddWithValue("@email", user.Email);
                     command.Parameters.AddWithValue("@joindate", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                     command.Parameters.AddWithValue("@isactive", 1);
@@ -544,11 +544,19 @@ namespace CsokiBet
                     catch (Exception ex)
                     {
                         MessageBox.Show("Failed to send email: " + ex.Message);
+                        txtEmail.IsEnabled = true;
+                        txtPasscode.IsEnabled = true;
+                        txtConfirmPasscode.IsEnabled = true;
+                        txtUsername.IsEnabled = true;
                     }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Registration failed: {ex.Message}");
+                    txtEmail.IsEnabled = true;
+                    txtPasscode.IsEnabled = true;
+                    txtConfirmPasscode.IsEnabled = true;
+                    txtUsername.IsEnabled = true;
                 }
 
 

@@ -63,7 +63,8 @@ INSERT INTO `bettors` (`BettorsID`, `Username`, `Password`, `Balance`, `Email`, 
 (2, 'JaneSmith', '688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6', 2500, 'jane.smith@example.com', '2022-05-23', 1, 'Bettor'),
 (3, 'AdminUser', '688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6', 5000, 'admin.user@example.com', '2020-09-10', 1, 'Admin'),
 (4, 'EventOrg', '688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6', 3000, 'event.org@example.com', '2021-03-29', 1, 'Organizer'),
-(5, 'InactiveBettor', '688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6', 1500, 'inactive.bettor@example.com', '2023-02-17', 0, 'Bettor');
+(5, 'InactiveBettor', '688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6', 1500, 'inactive.bettor@example.com', '2023-02-17', 0, 'Bettor'),
+(10, 'vakond', '6bcf18fb89650e3d579be3d32f3f5b8326065df71c5a44a84ff93d405be538b3', 1000000, 'danko7119@gmail.com', '2024-10-11', 1, 'Admin');
 
 -- --------------------------------------------------------
 
