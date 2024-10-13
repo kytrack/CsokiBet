@@ -11,7 +11,7 @@ namespace CsokiBet
     {
         string Loadedemail;
         string Loadedusername;
-        private string connectionString = "Server=127.0.0.1;Database=csokibet;User ID=root;Password=;";
+        private string connectionString = "Server=localhost;Database=csokibet;User ID=root;Password=;";
         private string userFilePath = "user_data.txt";
         private Random _random = new Random();
         private double playerBalance;
@@ -65,7 +65,7 @@ namespace CsokiBet
                                 bettorID = reader.GetInt32("BettorsID");
                                 playerBalance = reader.GetDouble("Balance");
                                 role = reader.GetString("Role");
-                                tbBalance.Text = $"Balance: ${playerBalance}";
+                                tbBalance.Text = $"${playerBalance}";
                             }
                             else
                             {
@@ -119,7 +119,7 @@ namespace CsokiBet
                         if (result != null)
                         {
                             decimal balance = Convert.ToDecimal(result);
-                            tbBalance.Text = $"Balance: ${balance}";
+                            tbBalance.Text = $"${balance}";
                         }
                         else
                         {
@@ -133,6 +133,9 @@ namespace CsokiBet
                 MessageBox.Show($"Hiba történt az egyenleg betöltése során: {ex.Message}");
             }
         }
+
+        // Lista az összes eseménykártya tárolására
+        private List<Border> allEventTiles = new List<Border>();
 
         private void LoadUpcomingEvents()
         {
@@ -153,67 +156,13 @@ namespace CsokiBet
                                 string category = reader.GetString("Category");
                                 string location = reader.GetString("Location");
 
-                                double odds = Math.Round(1.5 + _random.NextDouble() * 2, 2);
+                                // Esemény kártya létrehozása és beállítása
+                                Border eventTile = CreateEventTile(eventID, eventName, category, location);
 
-                                Border eventTile = new Border
-                                {
-                                    Background = new SolidColorBrush(Colors.DarkSlateGray),
-                                    CornerRadius = new CornerRadius(10),
-                                    Width = 200,
-                                    Height = 150,
-                                    Margin = new Thickness(10)
-                                };
+                                // Mentse el az összes eseményt a listába
+                                allEventTiles.Add(eventTile);
 
-                                StackPanel tileContent = new StackPanel
-                                {
-                                    Orientation = Orientation.Vertical,
-                                    HorizontalAlignment = HorizontalAlignment.Center,
-                                    VerticalAlignment = VerticalAlignment.Center
-                                };
-
-                                TextBlock eventText = new TextBlock
-                                {
-                                    Text = $"{eventName} ({category})",
-                                    Foreground = Brushes.White,
-                                    FontWeight = FontWeights.Bold,
-                                    FontSize = 14,
-                                    TextAlignment = TextAlignment.Center
-                                };
-                                tileContent.Children.Add(eventText);
-
-                                TextBlock oddsText = new TextBlock
-                                {
-                                    Text = $"Odds: {odds:F2}",
-                                    Foreground = Brushes.LightGreen,
-                                    FontWeight = FontWeights.Bold,
-                                    FontSize = 12,
-                                    TextAlignment = TextAlignment.Center
-                                };
-                                tileContent.Children.Add(oddsText);
-
-                                TextBlock locationText = new TextBlock
-                                {
-                                    Text = location,
-                                    Foreground = Brushes.LightGray,
-                                    FontSize = 12,
-                                    TextAlignment = TextAlignment.Center
-                                };
-                                tileContent.Children.Add(locationText);
-
-                                Button betButton = new Button
-                                {
-                                    Content = "Bet",
-                                    Background = Brushes.Green,
-                                    Foreground = Brushes.White,
-                                    Margin = new Thickness(5),
-                                    Padding = new Thickness(5),
-                                    Tag = new { EventID = eventID, Odds = odds }
-                                };
-                                betButton.Click += BetButton_Click;
-                                tileContent.Children.Add(betButton);
-
-                                eventTile.Child = tileContent;
-
+                                // Add hozzá az esemény kártyát a megjelenített panelhez
                                 EventTilesPanel.Children.Add(eventTile);
                             }
                         }
@@ -225,6 +174,132 @@ namespace CsokiBet
                 MessageBox.Show($"Error loading events: {ex.Message}");
             }
         }
+
+        // Esemény kártya létrehozása
+        private Border CreateEventTile(int eventID, string eventName, string category, string location)
+        {
+            double odds = Math.Round(1.5 + _random.NextDouble() * 2, 2);
+
+            Border eventTile = new Border
+            {
+                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#102923")),
+                CornerRadius = new CornerRadius(10),
+                Width = 200,
+                Height = 150,
+                Margin = new Thickness(10)
+            };
+
+            // DockPanel a tartalomhoz
+            DockPanel tileContent = new DockPanel();
+
+            // Kategória TextBlock (a DockPanel tetejére rögzítve)
+            TextBlock categoryText = new TextBlock
+            {
+                Text = $"{category}",
+                Foreground = Brushes.White,
+                FontWeight = FontWeights.Bold,
+                FontSize = 14,
+                TextAlignment = TextAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Top,
+                Margin = new Thickness(0, 10, 0, 0)
+            };
+            DockPanel.SetDock(categoryText, Dock.Top);
+            tileContent.Children.Add(categoryText);
+
+            // StackPanel a többi tartalomhoz
+            StackPanel eventInfoPanel = new StackPanel
+            {
+                Orientation = Orientation.Vertical,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            // Esemény neve
+            TextBlock eventText = new TextBlock
+            {
+                Text = $"{eventName}",
+                Foreground = Brushes.White,
+                FontWeight = FontWeights.Bold,
+                FontSize = 14,
+                TextAlignment = TextAlignment.Center,
+                TextWrapping = TextWrapping.Wrap,
+                MaxWidth = 180
+            };
+            eventInfoPanel.Children.Add(eventText);
+
+            // Odds szöveg
+            TextBlock oddsText = new TextBlock
+            {
+                Text = $"Odds: {odds:F2}",
+                Foreground = Brushes.LightGreen,
+                FontWeight = FontWeights.Bold,
+                FontSize = 12,
+                TextAlignment = TextAlignment.Center
+            };
+            eventInfoPanel.Children.Add(oddsText);
+
+            // Helyszín szöveg
+            TextBlock locationText = new TextBlock
+            {
+                Text = location,
+                Foreground = Brushes.LightGray,
+                FontSize = 12,
+                TextAlignment = TextAlignment.Center
+            };
+            eventInfoPanel.Children.Add(locationText);
+
+            // Fogadás gomb
+            Button betButton = new Button
+            {
+                Content = "Bet",
+                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1C3934")),
+                BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1C3934")),
+                Foreground = Brushes.White,
+                Margin = new Thickness(5),
+                Padding = new Thickness(5),
+                Tag = new { EventID = eventID, Odds = odds },
+                Style = (Style)FindResource("TransparentButtonStyle")
+            };
+            betButton.Click += BetButton_Click;
+            eventInfoPanel.Children.Add(betButton);
+
+            tileContent.Children.Add(eventInfoPanel);
+            eventTile.Child = tileContent;
+
+            return eventTile;
+        }
+
+
+        // Keresési szöveg változási eseménykezelő
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchText = SearchTextBox.Text.ToLower();
+
+            // Szűrés a beírt szöveg alapján
+            var filteredTiles = allEventTiles.Where(tile =>
+            {
+                var stackPanel = tile.Child as DockPanel;
+                if (stackPanel != null)
+                {
+                    var eventNameTextBlock = stackPanel.Children.OfType<StackPanel>()
+                        .FirstOrDefault()?.Children.OfType<TextBlock>().FirstOrDefault();
+                    if (eventNameTextBlock != null)
+                    {
+                        return eventNameTextBlock.Text.ToLower().Contains(searchText);
+                    }
+                }
+                return false;
+            }).ToList();
+
+            // Frissítés
+            EventTilesPanel.Children.Clear();
+            foreach (var tile in filteredTiles)
+            {
+                EventTilesPanel.Children.Add(tile);
+            }
+        }
+
+
 
         private void BetButton_Click(object sender, RoutedEventArgs e)
         {
@@ -242,7 +317,7 @@ namespace CsokiBet
             {
                 if (selectedEventTile != null)
                 {
-                    selectedEventTile.Background = new SolidColorBrush(Colors.DarkSlateGray);
+                    selectedEventTile.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#102923"));
                 }
                 parentTile.Background = new SolidColorBrush(Color.FromRgb(20, 60, 50));
                 selectedEventTile = parentTile;
@@ -262,7 +337,7 @@ namespace CsokiBet
                 var betInfo = (dynamic)AmountTextBox.Tag;
                 if (betInfo == null)
                 {
-                    WinningsTextBlock.Text = "Invalid bet selection";
+                    WinningsTextBlock.Text = "Válassz eseményt";
                     return;
                 }
                 double odds = betInfo.Odds;
@@ -271,7 +346,7 @@ namespace CsokiBet
             }
             else
             {
-                WinningsTextBlock.Text = "Invalid amount";
+                WinningsTextBlock.Text = "Nem megfelelő összeg";
             }
         }
 
@@ -288,7 +363,7 @@ namespace CsokiBet
             var betInfo = (dynamic)AmountTextBox.Tag;
             if (betInfo == null)
             {
-                ErrorMessage.Text = "Please select an event to bet on.";
+                ErrorMessage.Text = "Válassz eseményt";
                 ErrorMessage.Visibility = Visibility.Visible;
                 return;
             }
@@ -302,7 +377,7 @@ namespace CsokiBet
                 {
                     playerBalance -= betAmount;
                     UpdatePlayerBalanceInDatabase(bettorID, playerBalance);
-                    tbBalance.Text = $"Balance: ${playerBalance}";
+                    tbBalance.Text = $"${playerBalance}";
                     PlaceBetInDatabase(eventID, odds, betAmount);
                     AmountTextBox.Clear();
                     WinningsTextBlock.Text = "0";
@@ -311,13 +386,13 @@ namespace CsokiBet
                 }
                 else
                 {
-                    ErrorMessage.Text = "Insufficient balance to place this bet.";
+                    ErrorMessage.Text = "Nincs elegendő egyenleged";
                     ErrorMessage.Visibility = Visibility.Visible;
                 }
             }
             else
             {
-                ErrorMessage.Text = "Invalid amount.";
+                ErrorMessage.Text = "Nem megfelelő érték";
                 ErrorMessage.Visibility = Visibility.Visible;
             }
         }
@@ -351,10 +426,10 @@ namespace CsokiBet
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    string query = "INSERT INTO bets (BettorID, EventID, Odds, Amount) VALUES (@BettorID, @EventID, @Odds, @Amount)";
+                    string query = "INSERT INTO bets (BettorsID, EventID, Odds, Amount) VALUES (@BettorsID, @EventID, @Odds, @Amount)";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@BettorID", bettorID);
+                        cmd.Parameters.AddWithValue("@BettorsID", bettorID);
                         cmd.Parameters.AddWithValue("@EventID", eventID);
                         cmd.Parameters.AddWithValue("@Odds", odds);
                         cmd.Parameters.AddWithValue("@Amount", amount);
@@ -443,6 +518,13 @@ namespace CsokiBet
             OrganizerPanel organizer = new OrganizerPanel();
             organizer.Show();
             this.Close();
+        }
+        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
         }
     }
 }
