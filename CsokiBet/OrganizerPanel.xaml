@@ -1,43 +1,68 @@
 ﻿<Window x:Class="CsokiBet.OrganizerPanel"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Organizer Panel" Height="500" Width="800">
-    <Grid>
-        <!-- Search box for filtering by event name -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,10,0,0">
-            <Label Content="Search Event Name:" VerticalAlignment="Center"/>
-            <TextBox Name="SearchTextBox" Width="200" TextChanged="SearchTextBox_TextChanged" Margin="5,0,0,0"/>
-        </StackPanel>
+        Title="Organizer Panel" Height="600" Width="1000"
+        Style="{StaticResource MaterialDesignWindow}"
+        WindowStyle="None"  MouseDown="Window_MouseDown" Icon="images/csokibetlogo.png"
+        WindowStartupLocation="CenterScreen" 
+        Background="Transparent"
+        AllowsTransparency="True"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <Border CornerRadius="25" Background="#1C3934" BorderBrush="LightGreen" BorderThickness="1.5">
+        <Grid>
+            <Button Width="50" Margin="940,10,10,558" Click="Button_Click">X</Button >
+            <!-- Search box for filtering by event name -->
+            <StackPanel Orientation="Vertical" Grid.Row="0" VerticalAlignment="Top" Margin="10">
+                <Border Background="#1F493F" Height="30" Width="600" CornerRadius="15"/>
+                <TextBox x:Name="SearchTextBox" Margin="0,-30,0,0"
+Width="550"
+Height="30" 
+TextChanged="SearchTextBox_TextChanged"
+materialDesign:HintAssist.Hint="Felhasználónév kereső"
+materialDesign:HintAssist.IsFloating="True"
+materialDesign:TextFieldAssist.HasClearButton="True"/>
+                <Image Margin="195,-30,0,0" HorizontalAlignment="Left" Source="images/search_icon.png"  Width="15" Height="15" />
 
-        <!-- DataGrid for displaying events -->
-        <DataGrid Name="EventDataGrid" AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged" 
-                  HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="200" Margin="10,40,10,0">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Event ID" Binding="{Binding EventID}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Event Name" Binding="{Binding EventName}"/>
-                <DataGridTextColumn Header="Event Date" Binding="{Binding EventDate}"/>
-                <DataGridTextColumn Header="Category" Binding="{Binding Category}"/>
-                <DataGridTextColumn Header="Location" Binding="{Binding Location}"/>
-            </DataGrid.Columns>
-        </DataGrid>
+            </StackPanel>
 
-        <!-- Fields for event details -->
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="10,220,0,0">
-            <Label Content="Event Name"/>
-            <TextBox Name="EventNameTextBox"/>
-            <Label Content="Event Date"/>
-            <TextBox Name="EventDateTextBox"/>
-            <Label Content="Category"/>
-            <TextBox Name="CategoryTextBox"/>
-            <Label Content="Location"/>
-            <TextBox Name="LocationTextBox"/>
-        </StackPanel>
+            <!-- DataGrid for displaying events -->
+            <DataGrid Width="950" Height="300" Margin="0,60,0,0" Name="EventDataGrid" AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged" 
+                  HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Esemény ID" Binding="{Binding EventID}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Esemény Neve" Binding="{Binding EventName}"/>
+                    <DataGridTextColumn Header="Esemény időpontja" Binding="{Binding EventDate}"/>
+                    <DataGridTextColumn Header="Kategória" Binding="{Binding Category}"/>
+                    <DataGridTextColumn Header="Helyszín" Binding="{Binding Location}"/>
+                </DataGrid.Columns>
+            </DataGrid>
 
-        <!-- Buttons -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
-            <Button Content="Create Event" Click="CreateEvent_Click" Width="100" Margin="5"/>
-            <Button Content="Modify Event" Click="ModifyEvent_Click" Width="100" Margin="5"/>
-            <Button Content="Delete Event" Click="DeleteEvent_Click" Width="100" Margin="5"/>
-        </StackPanel>
-    </Grid>
+            <!-- Fields for event details -->
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="25,365,0,-145">
+                <TextBox Margin="0,0,0,20" Name="EventNameTextBox"
+                         materialDesign:HintAssist.Hint="Esemény neve"
+materialDesign:HintAssist.IsFloating="True"
+materialDesign:TextFieldAssist.HasClearButton="True"/>
+                <TextBox Margin="0,0,0,20" Name="EventDateTextBox"
+                                                  materialDesign:HintAssist.Hint="Időpont"
+materialDesign:HintAssist.IsFloating="True"
+materialDesign:TextFieldAssist.HasClearButton="True"/>
+                <TextBox Margin="0,0,0,20" Name="CategoryTextBox"
+                                                  materialDesign:HintAssist.Hint="Kategória"
+materialDesign:HintAssist.IsFloating="True"
+materialDesign:TextFieldAssist.HasClearButton="True"/>
+                <TextBox Name="LocationTextBox"
+                                                  materialDesign:HintAssist.Hint="Helyszín"
+materialDesign:HintAssist.IsFloating="True"
+materialDesign:TextFieldAssist.HasClearButton="True"/>
+            </StackPanel>
+
+            <!-- Buttons -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+                <Button Content="Új esemény" Click="CreateEvent_Click" Width="120" Margin="5"/>
+                <Button Content="Esemény szerksztés" Click="ModifyEvent_Click" Width="160" Margin="5"/>
+                <Button Content="Esemény törlés" Click="DeleteEvent_Click" Width="150" Margin="5"/>
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>

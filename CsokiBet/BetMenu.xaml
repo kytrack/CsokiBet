@@ -170,7 +170,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="150"/>
         </Grid.ColumnDefinitions>
-
+      
         <!-- Top Bar -->
         <Border Grid.Row="0" Grid.ColumnSpan="3" Background="#1F493F">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
@@ -191,11 +191,11 @@
                 <Border Background="#1F493F" CornerRadius="10">
                     <ListBox Foreground="LightGray" BorderBrush="Transparent">
                         <ListBoxItem Content="Football" Background="Transparent"/>
-                    <ListBoxItem Content="Basketball" Background="Transparent"/>
-                    <ListBoxItem Content="Tennis" Background="Transparent"/>
-                    <ListBoxItem Content="Cricket" Background="Transparent"/>
-                    <ListBoxItem Content="Hockey" Background="Transparent"/>
-                </ListBox>
+                        <ListBoxItem Content="Basketball" Background="Transparent"/>
+                        <ListBoxItem Content="Tennis" Background="Transparent"/>
+                        <ListBoxItem Content="Cricket" Background="Transparent"/>
+                        <ListBoxItem Content="Hockey" Background="Transparent"/>
+                    </ListBox>
                 </Border>
             </StackPanel>
         </Border>
@@ -246,7 +246,7 @@
             <Border Grid.Row="1" Background="#17302A" Margin="5" Padding="10">
                 <StackPanel>
                     <!-- Keresősáv -->
-                   
+
 
                     <!-- Események szekció -->
                     <TextBlock Text="Események" Width="110" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="LightGray" Margin="0,0,0,10"/>
@@ -295,7 +295,7 @@
 
                 <!-- Betting Section - Initially Hidden -->
                 <Border  Background="#1F493F" CornerRadius="10" Margin="5,10,5,0">
-                <StackPanel Margin="5,10,5,0" x:Name="BettingSection" Visibility="Visible">
+                    <StackPanel Margin="5,10,5,0" x:Name="BettingSection" Visibility="Collapsed">
 
 
 
@@ -304,13 +304,13 @@
 
 
 
-                    <Border 
+                        <Border 
             Background="#102923" 
             CornerRadius="10" 
             Margin="0,5,0,0" Width="130" Height="20"/>
 
 
-                    <TextBox
+                        <TextBox
                         x:Name="AmountTextBox"
                         TextChanged="AmountTextBox_TextChanged"
                         Margin="0,-22,0,0"
@@ -321,36 +321,36 @@
                         materialDesign:HintAssist.IsFloating="True"
                         materialDesign:TextFieldAssist.HasClearButton="True"
                         Foreground="White">
-                        <TextBox.Resources>
-                            <Style TargetType="{x:Type materialDesign:SmartHint}">
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                            </Style>
-                        </TextBox.Resources>
+                            <TextBox.Resources>
+                                <Style TargetType="{x:Type materialDesign:SmartHint}">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                </Style>
+                            </TextBox.Resources>
 
-                    </TextBox>
-                        
-
+                        </TextBox>
 
 
-                    <!-- Várható nyeremény -->
-                    <TextBlock HorizontalAlignment="Center" Text="Nyeremény:" Foreground="LightGray"/>
-                    <TextBlock HorizontalAlignment="Center" x:Name="WinningsTextBlock" Foreground="LightGreen" FontWeight="Bold" Text="0"/>
 
 
-                    <Button Margin="10,0,10,15" BorderBrush="Transparent" FontWeight="Bold" Height="35" Style="{StaticResource TransparentButtonStyle}" x:Name="PlaceBetButton" Content="Fogadás" Padding="10,5" Click="PlaceBet_Click">
-                        <Button.Background>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                <GradientStop Color="#8BE95D" Offset="0.0"/>
-                                <!-- Második szín -->
-                                <!-- Első szín -->
-                                <GradientStop Color="#28B487" Offset="1.0"/>
-                            </LinearGradientBrush>
-                        </Button.Background>
-                    </Button>
+                        <!-- Várható nyeremény -->
+                        <TextBlock HorizontalAlignment="Center" Text="Nyeremény:" Foreground="LightGray"/>
+                        <TextBlock HorizontalAlignment="Center" x:Name="WinningsTextBlock" Foreground="LightGreen" FontWeight="Bold" Text="0"/>
 
 
-                    <TextBlock HorizontalAlignment="Center" FontSize="11" x:Name="ErrorMessage" Foreground="Red" Visibility="Collapsed"/>
-                </StackPanel>
+                        <Button Margin="10,0,10,15" BorderBrush="Transparent" FontWeight="Bold" Height="35" Style="{StaticResource TransparentButtonStyle}" x:Name="PlaceBetButton" Content="Fogadás" Padding="10,5" Click="PlaceBet_Click">
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="#8BE95D" Offset="0.0"/>
+                                    <!-- Második szín -->
+                                    <!-- Első szín -->
+                                    <GradientStop Color="#28B487" Offset="1.0"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
+
+
+                        <TextBlock HorizontalAlignment="Center" FontSize="11" x:Name="ErrorMessage" Foreground="Red" Visibility="Collapsed"/>
+                    </StackPanel>
                 </Border>
 
             </StackPanel>
@@ -361,9 +361,9 @@
             <StackPanel>
                 <TextBlock Text="Settings" FontSize="18" FontWeight="Bold" Foreground="LightGray" Margin="0,0,0,0"/>
                 <TextBlock Text="Biztonság" Foreground="LightGray" FontWeight="Bold" Margin="0,5,0,0"/>
-                <Button Name="btnPassWordReset" Content="Jelszó módosítása" Background="Red" Foreground="White" Width="120px" HorizontalAlignment="Left" Click="btnPassWordReset_Click"/>
+                <Button Name="btnPassWordReset" Content="Jelszó módosítása" Background="Red" Foreground="White" Width="150px" HorizontalAlignment="Left" Click="btnPassWordReset_Click"/>
             </StackPanel>
         </Border>
-
+        <Button Width="50" Margin="87,15,13,53" Click="Button_Click" Grid.Column="2">X</Button>
     </Grid>
 </Window>
