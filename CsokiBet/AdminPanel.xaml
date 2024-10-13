@@ -9,12 +9,20 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition />
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <!-- Main Content Section -->
 
-        <DataGrid x:Name="BettorDataGrid" AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged">
+        <!-- Keresőmező hozzáadása -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Top" Margin="10">
+            <TextBlock Text="Keresés:" VerticalAlignment="Center" Margin="5"/>
+            <TextBox x:Name="SearchTextBox" Width="200" VerticalAlignment="Center" TextChanged="SearchTextBox_TextChanged"/>
+        </StackPanel>
+
+        <!-- DataGrid -->
+        <DataGrid x:Name="BettorDataGrid" AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged" Grid.Row="1">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Felhasználói ID" Binding="{Binding BettorsID}" />
                 <DataGridTextColumn Header="Felhasználónév" Binding="{Binding Username}" />
@@ -26,7 +34,8 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel x:Name="UserDetailsPanel" Visibility="Visible" VerticalAlignment="Bottom" Grid.Row="1">
+        <!-- User Details Panel -->
+        <StackPanel x:Name="UserDetailsPanel" Visibility="Visible" VerticalAlignment="Bottom" Grid.Row="2">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Email:" />
                 <TextBlock x:Name="EmailTextBlock" Width="200" IsHitTestVisible="False" />
@@ -63,15 +72,12 @@
                 </ComboBox>
             </StackPanel>
 
-
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Firebase státusz:" />
                 <TextBlock x:Name="FirebaseStatusTextBlock" Width="200" />
             </StackPanel>
 
-
             <Button Content="Módosítás" Click="ModifyBettor_Click" Width="200" HorizontalAlignment="Left"/>
         </StackPanel>
-
     </Grid>
 </Window>
