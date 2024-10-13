@@ -43,9 +43,6 @@
     <Resource Include="images\email_icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="images\hellyeah.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="images\lock_icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

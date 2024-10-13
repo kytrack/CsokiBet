@@ -23,7 +23,7 @@
 
             <!-- Main Content Section -->
             <Button Width="50" Margin="940,8,10,10" Click="Button_Click">X</Button >
-                <!-- Keresőmező hozzáadása -->
+            <!-- Keresőmező hozzáadása -->
             <StackPanel Orientation="Vertical" Grid.Row="0" VerticalAlignment="Top" Margin="10">
                 <Border Background="#1F493F" Height="30" Width="600" CornerRadius="15"/>
                 <TextBox x:Name="SearchTextBox" Margin="0,-30,0,0"
@@ -39,7 +39,7 @@
 
             <!-- DataGrid -->
 
-            <DataGrid Grid.Row="1" Width="950" Height="300" x:Name="BettorDataGrid" AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged" >
+            <DataGrid Grid.Row="1" Width="950" Height="250" x:Name="BettorDataGrid" AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Felhasználói ID" Binding="{Binding BettorsID}" />
                     <DataGridTextColumn Header="Felhasználónév" Binding="{Binding Username}" />
@@ -52,14 +52,16 @@
             </DataGrid>
 
             <!-- User Details Panel -->
-            <StackPanel x:Name="UserDetailsPanel" Visibility="Visible" VerticalAlignment="Center" Grid.Row="2" HorizontalAlignment="Center">
+            <StackPanel x:Name="UserDetailsPanel" Visibility="Visible" VerticalAlignment="Top" Grid.Row="1" HorizontalAlignment="Center" Margin="0,255,0,0" Grid.RowSpan="2">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Email:" />
-                    <TextBlock x:Name="EmailTextBlock" Width="200" IsHitTestVisible="False" />
+                    <TextBlock Foreground="LightGreen" x:Name="EmailTextBlock" Width="200" IsHitTestVisible="False" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Text="Felhasználónév:" />
-                    <TextBox x:Name="UsernameTextBox" Width="200" />
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <TextBox Foreground="LightGreen" Margin="0,10,0,0" x:Name="UsernameTextBox" Width="200"
+                                                 materialDesign:HintAssist.Hint="Felhasználónév"
+materialDesign:HintAssist.IsFloating="True"
+materialDesign:TextFieldAssist.HasClearButton="True"/>
                 </StackPanel>
 
                 <StackPanel Margin="0,15,0,15" Orientation="Horizontal">
@@ -67,20 +69,23 @@
                     <Button Margin="10,0,0,0" Content="Jelszó módosító email küldése" Click="SendPasswordResetEmail_Click" Width="250"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Text="Egyenleg:" />
-                    <TextBox x:Name="BalanceTextBox" Width="200" />
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+
+                    <TextBox Foreground="LightGreen" Margin="0,10,0,0" x:Name="BalanceTextBox" Width="200"
+                                                 materialDesign:HintAssist.Hint="Egyenleg"
+materialDesign:HintAssist.IsFloating="True"
+materialDesign:TextFieldAssist.HasClearButton="True"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <ComboBox Style="{DynamicResource MaterialDesignFloatingHintComboBox}" materialDesign:HintAssist.Foreground="White" materialDesign:HintAssist.Hint="Aktív" x:Name="IsActiveComboBox" Width="100">
+                <StackPanel Margin="0,10,0,0" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
+                    <ComboBox Foreground="LightGreen" Style="{DynamicResource MaterialDesignFloatingHintComboBox}" materialDesign:HintAssist.Foreground="White" materialDesign:HintAssist.Hint="Aktív" x:Name="IsActiveComboBox" Width="100">
                         <ComboBoxItem Content="Aktív" Tag="1" />
                         <ComboBoxItem Content="Inaktív" Tag="0" />
                     </ComboBox>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <ComboBox Style="{DynamicResource MaterialDesignFloatingHintComboBox}" materialDesign:HintAssist.Foreground="White" materialDesign:HintAssist.Hint="Szerep" x:Name="RoleComboBox" Width="200">
+                <StackPanel Margin="0,10,0,0" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <ComboBox Foreground="LightGreen" Style="{DynamicResource MaterialDesignFloatingHintComboBox}" materialDesign:HintAssist.Foreground="White" materialDesign:HintAssist.Hint="Szerep" x:Name="RoleComboBox" Width="100">
                         <ComboBoxItem Content="Bettor" Tag="Bettor" />
                         <ComboBoxItem Content="Organizer" Tag="Organizer" />
                         <ComboBoxItem Content="Admin" Tag="Admin" />

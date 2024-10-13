@@ -228,7 +228,7 @@
                 </Border.Background>
 
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0">
-                    <Button Cursor="Hand" Padding="10,5" Margin="10" Height="30" Width="100" Click="Button_Click_1">
+                    <Button Cursor="Hand" Padding="10,5" Margin="10" Height="30" Width="140" Click="Button_Click_1">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border Background="{TemplateBinding Background}" 
@@ -250,7 +250,7 @@
                             <SolidColorBrush Color="White" />
                         </Button.Foreground>
                         <Button.Content>
-                            Top Up Now
+                            Egyenleg feltöltés
                         </Button.Content>
                     </Button>
                 </StackPanel>

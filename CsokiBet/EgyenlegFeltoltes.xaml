@@ -4,52 +4,74 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CsokiBet"
-        Title="EgyenlegFeltoltes" Height="450" Width="450">
-    <Grid Margin="20">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40*"/>
-            <ColumnDefinition Width="0*"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Button Content="X" Grid.ColumnSpan="3" Width="30px" Margin="360 10 10 350" Click="Button_Click"/>
-        <TextBlock Text="Egyenleg felöltés" 
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="EgyenlegFeltoltes" Height="450" Width="450"
+        Style="{StaticResource MaterialDesignWindow}"
+        WindowStyle="None"  MouseDown="Window_MouseDown" Icon="images/csokibetlogo.png"
+        WindowStartupLocation="CenterScreen" 
+        Background="Transparent"
+        AllowsTransparency="True"
+        >
+    <Border CornerRadius="25" Background="#1C3934" BorderBrush="LightGreen" BorderThickness="1.5">
+        <Grid Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+          
+            <TextBlock Text="Egyenleg felöltés" 
                    FontSize="20" 
                    FontWeight="Bold" 
                    HorizontalAlignment="Left" 
                    Margin="125,10,0,20"/>
-        
-        <StackPanel VerticalAlignment="Center" Grid.ColumnSpan="3">
-            <TextBlock Text="Mennyit szeretnél feltölteni ($):" 
-                       Margin="0,0,0,10"/>
-            <TextBox Name="AmountTextBox" Width="200" Height="30" 
-                     HorizontalAlignment="Center" 
-                     Margin="0,0,0,20"/>
 
-            <TextBlock Text="Bankkártya információk" 
+            <StackPanel VerticalAlignment="Center" Grid.ColumnSpan="3">
+                <TextBox Foreground="LightGreen" Name="AmountTextBox" Width="200" Height="30" 
+                     HorizontalAlignment="Center" 
+                     Margin="0,0,0,20"
+                     materialDesign:HintAssist.Hint="Összeg"
+                     materialDesign:HintAssist.IsFloating="True"
+                     materialDesign:TextFieldAssist.HasClearButton="True"/>
+
+                <TextBlock Text="Bankkártya információk" 
                        FontWeight="Bold" 
                        Margin="0,0,0,10" 
                        HorizontalAlignment="Center"/>
 
-            <TextBlock Text="Kártyaszám:" Margin="0,0,0,5"/>
-            <TextBox Width="200" Height="30" 
+                <TextBox Foreground="LightGreen" Width="200" Height="30" 
                      HorizontalAlignment="Center" 
-                     Name="CardNumberTextBox"/>
+                     Name="CardNumberTextBox"
+                     materialDesign:HintAssist.Hint="Kártyaszám"
+materialDesign:HintAssist.IsFloating="True"
+materialDesign:TextFieldAssist.HasClearButton="True"
+                         Margin="0,0,0,20"/>
 
-            <TextBlock Text="Lejárat (MM/YY):" Margin="0,0,0,5"/>
-            <TextBox Width="200" Height="30" 
+
+                <TextBox Foreground="LightGreen" Width="200" Height="30" 
                      HorizontalAlignment="Center" 
-                     Name="ExpiryDateTextBox"/>
+                     Name="ExpiryDateTextBox"
+                         materialDesign:HintAssist.Hint="Lejárat (MM/YY)"
+materialDesign:HintAssist.IsFloating="True"
+materialDesign:TextFieldAssist.HasClearButton="True"
+                         Margin="0,0,0,20"/>
 
-            <TextBlock Text="CVC:" Margin="0,0,0,5"/>
-            <TextBox Width="200" Height="30" 
+                <TextBox Foreground="LightGreen" Width="200" Height="30" 
                      HorizontalAlignment="Center" 
-                     Name="CvcTextBox"/>
-        </StackPanel>
+                     Name="CvcTextBox"
+                    materialDesign:HintAssist.Hint="CVC"
+materialDesign:HintAssist.IsFloating="True"
+materialDesign:TextFieldAssist.HasClearButton="True"    />
+            </StackPanel>
 
-        <Button Content="Feltöltés" Width="150" Height="40" 
+            <Button Content="Feltöltés" Width="150" Height="40" 
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Bottom"
                 Margin="130,0,0,10" 
                 Click="FeltoltesButton_Click"/>
-    </Grid>
+
+            <Button Width="40"  Content="X" Click="Button_Click" Margin="370,-3,-3,378" Grid.ColumnSpan="3"/>
+        </Grid>
+        
+    </Border>
 </Window>

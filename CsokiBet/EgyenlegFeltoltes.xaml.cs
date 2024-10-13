@@ -11,6 +11,14 @@ namespace CsokiBet
             InitializeComponent();
         }
 
+        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
+
         private void FeltoltesButton_Click(object sender, RoutedEventArgs e)
         {
             // Ellenőrizd, hogy minden mező ki van-e töltve

@@ -26,7 +26,7 @@ materialDesign:TextFieldAssist.HasClearButton="True"/>
             </StackPanel>
 
             <!-- DataGrid for displaying events -->
-            <DataGrid Width="950" Height="300" Margin="0,60,0,0" Name="EventDataGrid" AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged" 
+            <DataGrid Width="950" Height="290" Margin="0,60,0,0" Name="EventDataGrid" AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged" 
                   HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Esemény ID" Binding="{Binding EventID}" IsReadOnly="True"/>
@@ -38,27 +38,27 @@ materialDesign:TextFieldAssist.HasClearButton="True"/>
             </DataGrid>
 
             <!-- Fields for event details -->
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="25,365,0,-145">
-                <TextBox Margin="0,0,0,20" Name="EventNameTextBox"
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="25,365,0,-145">
+                <TextBox Foreground="LightGreen" Margin="0,0,0,20" Name="EventNameTextBox"
                          materialDesign:HintAssist.Hint="Esemény neve"
 materialDesign:HintAssist.IsFloating="True"
 materialDesign:TextFieldAssist.HasClearButton="True"/>
-                <TextBox Margin="0,0,0,20" Name="EventDateTextBox"
+                <TextBox Foreground="LightGreen" Margin="0,0,0,20" Name="EventDateTextBox"
                                                   materialDesign:HintAssist.Hint="Időpont"
 materialDesign:HintAssist.IsFloating="True"
 materialDesign:TextFieldAssist.HasClearButton="True"/>
-                <TextBox Margin="0,0,0,20" Name="CategoryTextBox"
+                <TextBox Foreground="LightGreen" Margin="0,0,0,20" Name="CategoryTextBox"
                                                   materialDesign:HintAssist.Hint="Kategória"
 materialDesign:HintAssist.IsFloating="True"
 materialDesign:TextFieldAssist.HasClearButton="True"/>
-                <TextBox Name="LocationTextBox"
+                <TextBox Foreground="LightGreen" Name="LocationTextBox"
                                                   materialDesign:HintAssist.Hint="Helyszín"
 materialDesign:HintAssist.IsFloating="True"
 materialDesign:TextFieldAssist.HasClearButton="True"/>
             </StackPanel>
 
             <!-- Buttons -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10,0,0,10">
                 <Button Content="Új esemény" Click="CreateEvent_Click" Width="120" Margin="5"/>
                 <Button Content="Esemény szerksztés" Click="ModifyEvent_Click" Width="160" Margin="5"/>
                 <Button Content="Esemény törlés" Click="DeleteEvent_Click" Width="150" Margin="5"/>
