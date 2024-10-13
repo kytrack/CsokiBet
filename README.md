@@ -37,6 +37,6 @@
 6. Hozz létre az XAMPP segítségével egy adatbázist "csokibet" néven és a CsokiBet mappába található sql fájlt importáld be
 7. Indítsd el a programot a Visual Studioban
 
-### Készítők
+## Készítők
 
 - Projektet Dankó Dániel és Vedrán Krisztián készítette
