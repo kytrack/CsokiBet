@@ -9,6 +9,7 @@ namespace CsokiBet
     public partial class OrganizerPanel : Window
     {
         private const string connectionString = "Server=localhost;Database=csokibet;User ID=root;Password=;";
+        private DataTable eventsTable;  // Az események adatait itt tároljuk
 
         public OrganizerPanel()
         {
@@ -23,9 +24,9 @@ namespace CsokiBet
                 connection.Open();
                 MySqlCommand command = new MySqlCommand("SELECT * FROM events", connection);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-                EventDataGrid.ItemsSource = dt.DefaultView;
+                eventsTable = new DataTable();
+                adapter.Fill(eventsTable);
+                EventDataGrid.ItemsSource = eventsTable.DefaultView;
             }
         }
 
@@ -133,6 +134,27 @@ namespace CsokiBet
 
                 LoadEvents(); // Frissítjük a DataGrid-et
                 ClearTextBoxes(); // TextBox-ok tartalmának törlése
+            }
+        }
+
+        // Keresés megvalósítása az EventName mező alapján
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string filterText = SearchTextBox.Text.Trim();
+            if (eventsTable != null)
+            {
+                if (string.IsNullOrEmpty(filterText))
+                {
+                    // Ha a keresőmező üres, minden eseményt megjelenítünk
+                    EventDataGrid.ItemsSource = eventsTable.DefaultView;
+                }
+                else
+                {
+                    // Szűrés az EventName oszlop alapján
+                    DataView filteredView = new DataView(eventsTable);
+                    filteredView.RowFilter = $"EventName LIKE '%{filterText}%'";
+                    EventDataGrid.ItemsSource = filteredView;
+                }
             }
         }
 

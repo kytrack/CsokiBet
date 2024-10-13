@@ -4,16 +4,18 @@ using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using FirebaseAdmin;
-using FirebaseAdmin.Auth; // FirebaseAdmin Auth SDK
+using FirebaseAdmin.Auth;
 using Google.Apis.Auth.OAuth2;
-using Firebase.Auth; // Firebase.Auth SDK (REST API)
+using Firebase.Auth;
 using System.Windows.Media;
+using System.Linq;
 
 namespace CsokiBet
 {
     public partial class AdminPanel : Window
     {
         private const string connectionString = "Server=localhost;Database=csokibet;User ID=root;Password=;";
+        private DataTable originalBettorsData; // Az eredeti adatforrás
 
         public AdminPanel()
         {
@@ -24,7 +26,6 @@ namespace CsokiBet
 
         private void InitializeFirebase()
         {
-            // Ellenőrizzük, hogy már létezik-e az alapértelmezett FirebaseApp
             if (FirebaseApp.DefaultInstance == null)
             {
                 FirebaseApp.Create(new AppOptions()
@@ -34,14 +35,12 @@ namespace CsokiBet
             }
         }
 
-
         private async void CheckFirebaseStatus(string email)
         {
             FirebaseStatusTextBlock.Foreground = new SolidColorBrush(Colors.Black);
             FirebaseStatusTextBlock.Text = "Betöltés...";
             try
             {
-                // FirebaseAdmin felhasználó lekérdezése az email cím alapján
                 FirebaseAdmin.Auth.UserRecord userRecord = await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.GetUserByEmailAsync(email);
 
                 if (userRecord != null)
@@ -57,7 +56,6 @@ namespace CsokiBet
             }
             catch (FirebaseAdmin.Auth.FirebaseAuthException ex)
             {
-                // Ha nincs ilyen email a Firebase-ben
                 if (ex.AuthErrorCode == FirebaseAdmin.Auth.AuthErrorCode.UserNotFound)
                 {
                     FirebaseStatusTextBlock.Foreground = new SolidColorBrush(Colors.Red);
@@ -79,7 +77,28 @@ namespace CsokiBet
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                 DataTable dt = new DataTable();
                 adapter.Fill(dt);
+                originalBettorsData = dt; // Eredeti adatok mentése
                 BettorDataGrid.ItemsSource = dt.DefaultView;
+            }
+        }
+
+        // Keresőmező eseménykezelő
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string filterText = SearchTextBox.Text.Trim().ToLower();
+            if (originalBettorsData != null)
+            {
+                var filteredRows = originalBettorsData.AsEnumerable()
+                    .Where(row => row.Field<string>("Username").ToLower().Contains(filterText));
+
+                if (filteredRows.Any())
+                {
+                    BettorDataGrid.ItemsSource = filteredRows.CopyToDataTable().DefaultView;
+                }
+                else
+                {
+                    BettorDataGrid.ItemsSource = null;
+                }
             }
         }
 
@@ -89,12 +108,9 @@ namespace CsokiBet
             {
                 UsernameTextBox.Text = selectedRow["Username"].ToString();
                 BalanceTextBox.Text = selectedRow["Balance"].ToString();
-
-                // IsActive státusz beállítása
                 int isActive = Convert.ToInt32(selectedRow["IsActive"]);
                 IsActiveComboBox.SelectedItem = isActive == 1 ? IsActiveComboBox.Items[0] : IsActiveComboBox.Items[1];
 
-                // Szerepkör beállítása ComboBox-ban
                 string role = selectedRow["Role"].ToString();
                 foreach (ComboBoxItem item in RoleComboBox.Items)
                 {
@@ -106,8 +122,6 @@ namespace CsokiBet
                 }
 
                 EmailTextBlock.Text = selectedRow["Email"].ToString();
-
-                // Firebase státusz ellenőrzése
                 CheckFirebaseStatus(selectedRow["Email"].ToString());
             }
         }
@@ -123,7 +137,6 @@ namespace CsokiBet
                     ? Convert.ToInt32(selectedItem.Tag)
                     : 0;
 
-                // A kiválasztott szerepkör értéke a ComboBox-ból
                 string role = (RoleComboBox.SelectedItem as ComboBoxItem)?.Tag.ToString();
 
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -138,7 +151,7 @@ namespace CsokiBet
                     command.ExecuteNonQuery();
                 }
 
-                LoadBettors(); // Frissítjük az adatokat a DataGrid-ben
+                LoadBettors();
             }
         }
 
@@ -147,13 +160,8 @@ namespace CsokiBet
             try
             {
                 string email = EmailTextBlock.Text;
-
-                // Firebase konfiguráció a Firebase REST API használatával
                 var authProvider = new FirebaseAuthProvider(new FirebaseConfig("AIzaSyBXxbFR3nwUFni-dBOB4dg7i3C-Z0SNgcw"));
-
-                // Jelszó-visszaállító e-mail küldése
                 await authProvider.SendPasswordResetEmailAsync(email);
-
                 MessageBox.Show("Jelszó visszaállító e-mail elküldve erre az e-mail címre: " + email);
             }
             catch (Exception ex)

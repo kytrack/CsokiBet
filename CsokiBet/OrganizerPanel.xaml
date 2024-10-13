@@ -3,9 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Organizer Panel" Height="500" Width="800">
     <Grid>
+        <!-- Search box for filtering by event name -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,10,0,0">
+            <Label Content="Search Event Name:" VerticalAlignment="Center"/>
+            <TextBox Name="SearchTextBox" Width="200" TextChanged="SearchTextBox_TextChanged" Margin="5,0,0,0"/>
+        </StackPanel>
+
         <!-- DataGrid for displaying events -->
         <DataGrid Name="EventDataGrid" AutoGenerateColumns="False" SelectionChanged="DataGrid_SelectionChanged" 
-                  HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="200" Margin="10">
+                  HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="200" Margin="10,40,10,0">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Event ID" Binding="{Binding EventID}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Event Name" Binding="{Binding EventName}"/>
