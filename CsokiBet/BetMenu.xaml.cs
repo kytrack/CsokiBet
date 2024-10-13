@@ -51,6 +51,65 @@ namespace CsokiBet
                 string email = Loadedemail;
                 string username = Loadedusername;
 
+                tbFelhasznalonev.Text = username;
+
+
+
+
+
+
+                string querybetinfo = @"
+                SELECT COUNT(b.BetsID) AS TotalBets, SUM(b.Amount) AS TotalAmount
+                FROM bettors u
+                INNER JOIN bets b ON u.BettorsID = b.BettorsID
+                WHERE u.Username = @Username;";
+
+                // Adatbázis kapcsolat létrehozása és lekérdezés végrehajtása
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand command = new MySqlCommand(querybetinfo, connection);
+                    command.Parameters.AddWithValue("@Username", username);
+
+                    try
+                    {
+                        connection.Open();
+                        MySqlDataReader reader = command.ExecuteReader();
+
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                // Lekért adatok
+                                int totalBets = reader.GetInt32(0);
+                                decimal totalAmount = reader.GetDecimal(1);
+
+                                // Eredmények megjelenítése a WPF UI-n (pl. TextBlock)
+                                tbFogadaszam.Text = $"{totalBets}";
+                                tbFeltettpenz.Text = $"{totalAmount}";
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nincs ilyen felhasználó.");
+                        }
+                        reader.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Hiba történt az adatbázis kapcsolat közben: " + ex.Message);
+                    }
+                }
+
+
+
+
+
+
+
+
+
+
+
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
@@ -89,6 +148,11 @@ namespace CsokiBet
             {
                 btnOrganizer.Visibility = Visibility.Visible;
             }
+
+
+          
+
+
         }
 
         private void LoadUsername()
@@ -383,6 +447,9 @@ namespace CsokiBet
                     WinningsTextBlock.Text = "0";
                     AmountTextBox.Tag = null;
                     BettingSection.Visibility = Visibility.Collapsed;
+
+                    tbFeltettpenz.Text = $"{int.Parse(tbFeltettpenz.Text) + betAmount}";
+                    tbFogadaszam.Text = $"{int.Parse(tbFogadaszam.Text)+1}";
                 }
                 else
                 {
@@ -537,6 +604,11 @@ namespace CsokiBet
             EgyenlegFeltoltes topup = new EgyenlegFeltoltes();
             topup.Show();
             this.Close();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            SettingsPanel.Visibility = Visibility.Collapsed;
         }
     }
 }

@@ -175,27 +175,41 @@
         <Border Grid.Row="0" Grid.ColumnSpan="3" Background="#1F493F">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                 <Image Source="images/csokibetlogo.png" Width="100" Height="100" Margin="0,0,0,-3"/>
-                <Button Content="Home" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16"/>
-                <Button Content="My Wallet" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16"/>
-                <Button x:Name="btnLogOut" Content="Log Out" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" Click="btnLogOut_Click"/>
-                <Button x:Name="SettingsButton" Content="Settings" Background="DarkSlateGray" Foreground="White" Padding="10,5" Margin="10,0" Click="SettingsButton_Click"/>
-                <Button x:Name="btnAdmin" Content="Admin panel" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" Visibility="Collapsed" Click="btnAdmin_Click"/>
-                <Button x:Name="btnOrganizer" Content="Szervező panel" Foreground="White" Background="Transparent" BorderBrush="Transparent" FontSize="16" Visibility="Collapsed" Click="btnOrganizer_Click"/>
+                <Button Content="Főoldal" Foreground="White" Background="DarkSlateGray" FontSize="16" Click="Button_Click_2"/>
+                <Button x:Name="btnLogOut" Content="Kijelentkezés" Foreground="White" Background="DarkSlateGray" Margin="10,0,0,0"  FontSize="16" Click="btnLogOut_Click"/>
+                <Button x:Name="SettingsButton" Content="Beállítások" Background="DarkSlateGray" Foreground="White" Margin="10,0" Click="SettingsButton_Click"/>
+                <Button x:Name="btnAdmin" Content="Admin panel" Foreground="White" Background="DarkSlateGray" Margin="10,0,0,0" FontSize="16" Visibility="Collapsed" Click="btnAdmin_Click"/>
+                <Button x:Name="btnOrganizer" Content="Szervező panel" Foreground="White" Background="DarkSlateGray" Margin="10,0,0,0"  FontSize="16" Visibility="Collapsed" Click="btnOrganizer_Click"/>
             </StackPanel>
         </Border>
 
         <!-- Left Sidebar for Sports List -->
         <Border Grid.Row="1" Grid.Column="0" Background="#1C3934" Padding="10">
             <StackPanel>
-                <TextBlock Text="Sports" Foreground="LightGray" FontSize="18" Margin="0,0,0,10"/>
-                <Border Background="#1F493F" CornerRadius="10">
-                    <ListBox Foreground="LightGray" BorderBrush="Transparent">
-                        <ListBoxItem Content="Football" Background="Transparent"/>
-                        <ListBoxItem Content="Basketball" Background="Transparent"/>
-                        <ListBoxItem Content="Tennis" Background="Transparent"/>
-                        <ListBoxItem Content="Cricket" Background="Transparent"/>
-                        <ListBoxItem Content="Hockey" Background="Transparent"/>
-                    </ListBox>
+                <TextBlock HorizontalAlignment="Center" Text="Felhasználó" Foreground="LightGray" FontSize="18" Margin="0,0,0,10"/>
+                <Border Background="#1F493F" CornerRadius="10" HorizontalAlignment="Center">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <!-- Nagy user ikon -->
+
+                                    <Image Margin="0,5,0,0" Width="50" Source="images/user_icon.png" />
+
+                        <!-- Felhasználónév -->
+                        <TextBlock x:Name="tbFelhasznalonev" Text="Felhasználónév" Foreground="LightGreen" FontSize="16" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+                        <!-- Fogadások száma -->
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="Fogadások száma:" Foreground="White" FontSize="14"  HorizontalAlignment="Center"/>
+                            <TextBlock Foreground="LightGreen" HorizontalAlignment="Center" x:Name="tbFogadaszam" FontSize="14" Margin="0,0,0,5">20</TextBlock>
+                        </StackPanel>
+
+                        <StackPanel Margin="0,0,0,5" Orientation="Vertical">
+                            <TextBlock Text="Fogadott összeg:" Foreground="White" FontSize="14" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                <TextBlock FontSize="14" Foreground="LightGreen">$</TextBlock>
+                                <TextBlock Foreground="LightGreen" HorizontalAlignment="Center" x:Name="tbFeltettpenz" FontSize="14">20</TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+
+                    </StackPanel>
                 </Border>
             </StackPanel>
         </Border>
@@ -359,7 +373,7 @@
         <!-- Extra Settings Section from first XAML -->
         <Border x:Name="SettingsPanel" Background="#1C3934" Padding="10" Margin="5" Visibility="Collapsed" Grid.Row="1" Grid.Column="1">
             <StackPanel>
-                <TextBlock Text="Settings" FontSize="18" FontWeight="Bold" Foreground="LightGray" Margin="0,0,0,0"/>
+                <TextBlock Text="Beállítások" FontSize="18" FontWeight="Bold" Foreground="LightGray" Margin="0,0,0,0"/>
                 <TextBlock Text="Biztonság" Foreground="LightGray" FontWeight="Bold" Margin="0,5,0,0"/>
                 <Button Name="btnPassWordReset" Content="Jelszó módosítása" Background="Red" Foreground="White" Width="150px" HorizontalAlignment="Left" Click="btnPassWordReset_Click"/>
             </StackPanel>
