@@ -176,8 +176,29 @@ namespace CsokiBet
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            // Olvassuk be a fájlt
+            string[] lines = System.IO.File.ReadAllLines("user_data.txt");
+
+            // Ellenőrizzük, hogy legalább két sor van-e
+            if (lines.Length >= 2)
+            {
+                // Felhasználónév az első sorban, email a második sorban
+                string windowUsername = lines[0];
+                string windowEmail = lines[1];
+
+                // BetMenu létrehozása és megjelenítése
+                BetMenu betMenu = new BetMenu(windowEmail, windowUsername);
+                betMenu.Show();
+
+                // Jelenlegi ablak bezárása
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("A user_data.txt fájl nem tartalmaz elegendő adatot.");
+            }
         }
+
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)

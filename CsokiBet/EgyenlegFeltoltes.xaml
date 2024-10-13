@@ -1,0 +1,49 @@
+﻿<Window x:Class="CsokiBet.EgyenlegFeltoltes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CsokiBet"
+        Title="EgyenlegFeltoltes" Height="450" Width="450">
+    <Grid Margin="20">
+        <TextBlock Text="Egyenleg felöltés" 
+                   FontSize="20" 
+                   FontWeight="Bold" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,10,0,20"/>
+
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Mennyit szeretnél feltölteni ($):" 
+                       Margin="0,0,0,10"/>
+            <TextBox Name="AmountTextBox" Width="200" Height="30" 
+                     HorizontalAlignment="Center" 
+                     Margin="0,0,0,20"/>
+
+            <TextBlock Text="Bankkártya információk" 
+                       FontWeight="Bold" 
+                       Margin="0,0,0,10" 
+                       HorizontalAlignment="Center"/>
+
+            <TextBlock Text="Kártyaszám:" Margin="0,0,0,5"/>
+            <TextBox Width="200" Height="30" 
+                     HorizontalAlignment="Center" 
+                     Name="CardNumberTextBox"/>
+
+            <TextBlock Text="Lejárat (MM/YY):" Margin="0,0,0,5"/>
+            <TextBox Width="200" Height="30" 
+                     HorizontalAlignment="Center" 
+                     Name="ExpiryDateTextBox"/>
+
+            <TextBlock Text="CVC:" Margin="0,0,0,5"/>
+            <TextBox Width="200" Height="30" 
+                     HorizontalAlignment="Center" 
+                     Name="CvcTextBox"/>
+        </StackPanel>
+
+        <Button Content="Feltöltés" Width="150" Height="40" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Bottom"
+                Margin="0,20,0,10" 
+                Click="FeltoltesButton_Click"/>
+    </Grid>
+</Window>

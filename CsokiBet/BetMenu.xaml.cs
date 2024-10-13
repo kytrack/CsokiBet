@@ -531,5 +531,12 @@ namespace CsokiBet
         {
             this.Close();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            EgyenlegFeltoltes topup = new EgyenlegFeltoltes();
+            topup.Show();
+            this.Close();
+        }
     }
 }
