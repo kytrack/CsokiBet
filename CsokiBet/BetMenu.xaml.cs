@@ -96,7 +96,7 @@ namespace CsokiBet
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Hiba történt az adatbázis kapcsolat közben: " + ex.Message);
+                       
                     }
                 }
 
