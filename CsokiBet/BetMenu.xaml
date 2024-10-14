@@ -198,14 +198,14 @@
                         <!-- Fogadások száma -->
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Fogadások száma:" Foreground="White" FontSize="14"  HorizontalAlignment="Center"/>
-                            <TextBlock Foreground="LightGreen" HorizontalAlignment="Center" x:Name="tbFogadaszam" FontSize="14" Margin="0,0,0,5">20</TextBlock>
+                            <TextBlock Foreground="LightGreen" HorizontalAlignment="Center" x:Name="tbFogadaszam" FontSize="14" Margin="0,0,0,5">0</TextBlock>
                         </StackPanel>
 
                         <StackPanel Margin="0,0,0,5" Orientation="Vertical">
                             <TextBlock Text="Fogadott összeg:" Foreground="White" FontSize="14" Margin="0,0,0,5" HorizontalAlignment="Center"/>
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                                 <TextBlock FontSize="14" Foreground="LightGreen">$</TextBlock>
-                                <TextBlock Foreground="LightGreen" HorizontalAlignment="Center" x:Name="tbFeltettpenz" FontSize="14">20</TextBlock>
+                                <TextBlock Foreground="LightGreen" HorizontalAlignment="Center" x:Name="tbFeltettpenz" FontSize="14">0</TextBlock>
                             </StackPanel>
                         </StackPanel>
 
