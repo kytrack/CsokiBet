@@ -83,6 +83,38 @@ CREATE TABLE `events` (
 --
 -- Indexek a kiírt táblákhoz
 --
+-- Insert eldöntendő események az 'events' táblába különböző sportokkal
+INSERT INTO `events` (`EventName`, `EventDate`, `Category`, `Location`)
+VALUES
+-- Futball események
+('A Fradi 2 góllal nyeri meg a meccset', '2024-10-15', 'Futball', 'Budapest, Groupama Aréna'),
+('Lesz 3 vagy több gól a meccsen', '2024-10-15', 'Futball', 'Budapest, Groupama Aréna'),
+('Lesz piros lap a meccsen', '2024-10-18', 'Futball', 'Debrecen, Nagyerdei Stadion'),
+('Mindkét csapat szerez gólt', '2024-10-20', 'Futball', 'Győr, ETO Park'),
+('A mérkőzés döntetlennel ér véget', '2024-10-22', 'Futball', 'Budapest, Illovszky Rudolf Stadion'),
+('A meccsen lesz tizenegyes', '2024-10-25', 'Futball', 'Szeged, Szent Gellért Fórum'),
+('A Fradi gólt szerez az első félidőben', '2024-10-28', 'Futball', 'Szombathely, Haladás Sportkomplexum'),
+
+-- Kézilabda események
+('A Veszprém megnyeri a mérkőzést 5 gólos különbséggel', '2024-11-02', 'Kézilabda', 'Veszprém, Veszprém Aréna'),
+('A Szeged szerzi az első gólt a meccsen', '2024-11-05', 'Kézilabda', 'Szeged, Pick Aréna'),
+('Lesz piros lap a kézilabda mérkőzésen', '2024-11-08', 'Kézilabda', 'Debrecen, Főnix Csarnok'),
+('A meccsen 60 gól fölött lesz az összesített eredmény', '2024-11-10', 'Kézilabda', 'Tatabánya, Multifunkcionális Csarnok'),
+('A második félidőben a hazai csapat szerez több gólt', '2024-11-12', 'Kézilabda', 'Győr, Audi Aréna'),
+
+-- Kosárlabda események
+('A Falco szerez 80 pontot vagy többet', '2024-11-15', 'Kosárlabda', 'Szombathely, Arena Savaria'),
+('Az Alba Fehérvár dob elsőként hárompontost', '2024-11-17', 'Kosárlabda', 'Székesfehérvár, Alba Regia Sportcsarnok'),
+('Lesz 10 vagy több hárompontos a mérkőzésen', '2024-11-19', 'Kosárlabda', 'Kecskemét, Messzi István Sportcsarnok'),
+('A mérkőzés 5 pontos különbséggel dől el', '2024-11-21', 'Kosárlabda', 'Zalaegerszeg, Zalakerámia Sportcsarnok'),
+('A hazai csapat vezet az első negyed után', '2024-11-23', 'Kosárlabda', 'Pécs, Lauber Dezső Sportcsarnok'),
+
+-- Vízilabda események
+('A Szolnok nyeri a mérkőzést 3 gólos különbséggel', '2024-11-25', 'Vízilabda', 'Szolnok, Vízilabda Aréna'),
+('Lesz több mint 15 gól a meccsen', '2024-11-27', 'Vízilabda', 'Eger, Bitskey Aladár Uszoda'),
+('A meccsen mindkét csapat szerzi legalább 7 gólt', '2024-11-29', 'Vízilabda', 'Budapest, Komjádi Béla Uszoda'),
+('Az első negyed döntetlennel zárul', '2024-12-01', 'Vízilabda', 'Szeged, Tiszavirág Sportuszoda'),
+('A Fradi szerzi a legtöbb gólt a második félidőben', '2024-12-03', 'Vízilabda', 'Budapest, Népligeti Uszoda');
 
 --
 -- A tábla indexei `bets`
